@@ -628,204 +628,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Game Preview */
-.pred-preview {
-  width: 100%;
-  margin-bottom: 28px;
-  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
-}
-
-.pred-preview-glass {
-  position: relative;
-  width: 100%;
-  height: 320px;
-  border-radius: 24px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pred-preview-gradient-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, rgba(10, 22, 40, 0.6), transparent);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.pred-preview-gradient-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to top, rgba(10, 22, 40, 0.6), transparent);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.pred-preview-img {
-  width: 180px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 20px;
-  z-index: 1;
-  opacity: 0.9;
-}
-
-/* Prediction Card */
-.pred-card {
-  position: relative;
-  width: 100%;
-  border-radius: 24px;
-  padding: 2px;
-  margin-bottom: 24px;
-  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
-  background: linear-gradient(135deg, rgba(232, 184, 48, 0.4), rgba(201, 149, 32, 0.15), rgba(232, 184, 48, 0.4));
-  overflow: hidden;
-}
-
-.pred-card-shimmer {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(232, 184, 48, 0.08) 45%,
-    rgba(232, 184, 48, 0.15) 50%,
-    rgba(232, 184, 48, 0.08) 55%,
-    transparent 100%
-  );
-  animation: shimmer 3s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.pred-card-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 32px 20px;
-  background: rgba(10, 22, 40, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 22px;
-}
-
-.pred-card-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: #e8b830;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 16px;
-}
-
-.pred-card-value {
-  font-size: 2.8rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #e8b830, #f7dc8a, #e8b830);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 1px;
-  line-height: 1;
-  margin-bottom: 12px;
-  text-shadow: none;
-  filter: drop-shadow(0 0 20px rgba(232, 184, 48, 0.3));
-}
-
-.pred-bounce {
-  animation: springBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.pred-card-state {
-  font-size: 12px;
-  color: #7b8da4;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-
-/* History */
-.pred-history {
-  width: 100%;
-  margin-bottom: 28px;
-  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
-}
-
-.pred-history-label {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  color: #7b8da4;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
-}
-
-.pred-history-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.pred-history-chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
-  font-variant-numeric: tabular-nums;
-}
-
-/* Back Button */
-.pred-back-btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 16px 20px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
-}
-
-.pred-back-btn:active {
-  background: rgba(255, 255, 255, 0.08);
-  transform: scale(0.97);
-}
-
-.pred-back-btn svg {
-  flex-shrink: 0;
-}
-
 /* Footer */
 .pred-footer {
   position: relative;
@@ -880,105 +682,236 @@ body {
 }
 
 /* ================================================================
-   PREDICTION PAGE ANIMATIONS
+   PREDICTION PAGE KEYFRAME ANIMATIONS
    ================================================================ */
 
 @keyframes slideDown {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes statusPulse {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 0 0 0 0 currentColor;
-  }
-  50% {
-    opacity: 0.6;
-    box-shadow: 0 0 0 6px transparent;
-  }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 currentColor; }
+  50% { opacity: 0.6; box-shadow: 0 0 0 6px transparent; }
 }
 
 @keyframes springBounce {
-  0% {
-    transform: scale(0.7);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  70% {
-    transform: scale(0.95);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 200%;
-  }
+  0% { transform: scale(0.7); opacity: 0.5; }
+  50% { transform: scale(1.1); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes badgeFloat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 @keyframes ambientDrift {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  100% {
-    transform: translate(30px, 20px) rotate(3deg);
-  }
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(30px, 20px) rotate(3deg); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes gameBreath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.008); }
+}
+
+@keyframes multBounce {
+  0% { transform: scale(0.7); opacity: 0.5; }
+  50% { transform: scale(1.08); }
+  70% { transform: scale(0.97); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes labuTileReveal {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
 }
 
 /* ================================================================
-   ANIMATION VIEWPORT (280px, shared base)
+   GAME SECTION (Canvas + Viewport wrapper)
    ================================================================ */
 
-.anim-viewport {
-  position: relative;
+.game-section {
   width: 100%;
-  height: 280px;
-  border-radius: 20px;
-  overflow: hidden;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
-  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.anim-bg {
+/* ================================================================
+   CRASH CURVE CANVAS
+   ================================================================ */
+
+.crash-curve-canvas {
+  width: 100%;
+  height: 80px;
+  display: block;
+  border-radius: 12px 12px 0 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ================================================================
+   GAME VIEWPORT (Real Screenshot Background)
+   ================================================================ */
+
+.game-viewport {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+  border: 1px solid rgba(232, 184, 48, 0.2);
+  border-top: none;
+  animation: gameBreath 6s ease-in-out infinite;
+}
+
+.game-viewport-runner {
+  border-radius: 20px;
+  border-top: 1px solid rgba(232, 184, 48, 0.2);
+}
+
+.game-viewport-bg {
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.game-viewport-overlay {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.game-viewport-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    transparent 70%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ================================================================
+   MULTIPLIER OVERLAY (Glass card on game viewport)
+   ================================================================ */
+
+.mult-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 32px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  min-width: 160px;
+}
+
+.mult-signal-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #00e676;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  animation: fadeInUp 0.3s ease both;
+}
+
+.mult-value {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #e8b830, #f7dc8a, #e8b830);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(232, 184, 48, 0.4));
+}
+
+.mult-bounce {
+  animation: multBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mult-state {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* ================================================================
+   HISTORY ROW
+   ================================================================ */
+
+.history-row {
+  width: 100%;
+  margin-bottom: 20px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+}
+
+.history-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: #7b8da4;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.history-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.history-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  font-variant-numeric: tabular-nums;
+  transition: all 0.3s;
+}
+
+.history-chip-high {
+  background: rgba(0, 230, 118, 0.08);
+  border-color: rgba(0, 230, 118, 0.2);
+  color: #00e676;
 }
 
 /* ================================================================
@@ -1023,7 +956,10 @@ body {
   animation: spin 0.8s linear infinite;
 }
 
-/* Update back button to match spec */
+/* ================================================================
+   BACK BUTTON (Glass style)
+   ================================================================ */
+
 .pred-back-btn {
   width: 100%;
   display: flex;
@@ -1052,371 +988,8 @@ body {
   flex-shrink: 0;
 }
 
-/* ================================================================
-   AERO ANIMATION — Deep blue & cyan
-   ================================================================ */
-
-.anim-aero-bg {
-  background: linear-gradient(180deg, #0a1628 0%, #003366 50%, #0a1628 100%);
-}
-
-.aero-star {
-  position: absolute;
-  background: #ffffff;
-  border-radius: 50%;
-  animation: aeroStarTwinkle 2s ease-in-out infinite alternate;
-  z-index: 1;
-}
-
-.aero-speed-line {
-  position: absolute;
-  top: -40px;
-  width: 2px;
-  background: linear-gradient(to bottom, transparent, #00bfff, transparent);
-  border-radius: 2px;
-  animation: aeroSpeedLine 1.2s linear infinite;
-  z-index: 1;
-}
-
-.aero-glow-particle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #00bfff;
-  animation: aeroGlowPulse 2s ease-in-out infinite;
-  z-index: 1;
-  box-shadow: 0 0 12px #00bfff, 0 0 24px rgba(0, 191, 255, 0.4);
-}
-
-.aero-plane-wrap {
-  position: absolute;
-  left: 50%;
-  bottom: 40px;
-  transform: translateX(-50%);
-  z-index: 2;
-  animation: aeroPlaneAscend 3s ease-in-out infinite;
-}
-
-.aero-plane-svg {
-  width: 80px;
-  height: 32px;
-  filter: drop-shadow(0 0 12px rgba(0, 191, 255, 0.5));
-}
-
-.aero-afterburn {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 20px;
-  background: linear-gradient(to bottom, #ff6b00, transparent);
-  border-radius: 4px;
-  animation: aeroAfterburnFlicker 0.3s ease-in-out infinite alternate;
-}
-
-/* ================================================================
-   JETX ANIMATION — Dark purple & magenta
-   ================================================================ */
-
-.anim-jetx-bg {
-  background: linear-gradient(180deg, #1a0033 0%, #6600cc 50%, #1a0033 100%);
-}
-
-.jetx-grid-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.12), transparent);
-  animation: jetxGridScroll 2s linear infinite;
-  z-index: 1;
-}
-
-.jetx-neon-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #ff00ff;
-  animation: jetxNeonFloat 2s ease-in-out infinite alternate;
-  z-index: 1;
-  box-shadow: 0 0 8px #ff00ff, 0 0 16px rgba(255, 0, 255, 0.4);
-}
-
-.jetx-speed-line {
-  position: absolute;
-  top: -40px;
-  width: 2px;
-  background: linear-gradient(to bottom, transparent, #ff00ff, transparent);
-  border-radius: 2px;
-  animation: aeroSpeedLine 1s linear infinite;
-  z-index: 1;
-  filter: blur(1px);
-}
-
-.jetx-halo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 0, 255, 0.15);
-  animation: jetxHaloPulse 3s ease-in-out infinite;
-  z-index: 1;
-}
-
-.jetx-rocket-wrap {
-  position: absolute;
-  left: 50%;
-  bottom: 35px;
-  transform: translateX(-50%);
-  z-index: 2;
-  animation: aeroPlaneAscend 2.5s ease-in-out infinite;
-}
-
-.jetx-rocket-svg {
-  width: 80px;
-  height: 40px;
-  filter: drop-shadow(0 0 12px rgba(255, 0, 255, 0.5));
-}
-
-.jetx-flame-trail {
-  position: absolute;
-  bottom: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 24px;
-  background: linear-gradient(to bottom, #ff4500, rgba(255, 0, 255, 0.5), transparent);
-  border-radius: 6px;
-  animation: aeroAfterburnFlicker 0.25s ease-in-out infinite alternate;
-}
-
-/* ================================================================
-   AVIATOR ANIMATION — Red & black, minimalist
-   ================================================================ */
-
-.anim-aviator-bg {
-  background: linear-gradient(180deg, #1a0000 0%, #330000 50%, #1a0000 100%);
-}
-
-.aviator-vignette-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 60%, rgba(204, 0, 0, 0.15), transparent 60%);
-  z-index: 1;
-  animation: aviatorVignettePulse 4s ease-in-out infinite alternate;
-}
-
-.aviator-graph-curve {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.aviator-spark {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: #cc0000;
-  animation: aviatorSparkFloat 3s ease-in-out infinite;
-  z-index: 1;
-  box-shadow: 0 0 6px #cc0000;
-}
-
-.aviator-plane-wrap {
-  position: absolute;
-  left: 50%;
-  bottom: 45px;
-  transform: translateX(-50%);
-  z-index: 2;
-  animation: aeroPlaneAscend 3.5s ease-in-out infinite;
-}
-
-.aviator-plane-svg {
-  width: 36px;
-  height: 36px;
-  filter: drop-shadow(0 0 10px rgba(204, 0, 0, 0.6));
-}
-
-.aviator-trail-dot {
-  position: absolute;
-  bottom: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
-  animation: aviatorTrailPulse 1.5s ease-in-out infinite;
-}
-
-/* ================================================================
-   AVIATRIX ANIMATION — Blockchain green & gold
-   ================================================================ */
-
-.anim-aviatrix-bg {
-  background: linear-gradient(180deg, #0a2010 0%, #003300 50%, #0a2010 100%);
-}
-
-.aviatrix-connect-lines {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.aviatrix-node-dot {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #ffd700;
-  animation: aviatrixNodePulse 2.5s ease-in-out infinite;
-  z-index: 1;
-  box-shadow: 0 0 8px #ffd700, 0 0 16px rgba(255, 215, 0, 0.3);
-}
-
-.aviatrix-gold-particle {
-  position: absolute;
-  bottom: -10px;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: #ffd700;
-  animation: aviatrixParticleRise 3s ease-in infinite;
-  z-index: 1;
-  box-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
-}
-
-.aviatrix-center-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 204, 68, 0.12), transparent 70%);
-  animation: aviatrixCenterPulse 4s ease-in-out infinite alternate;
-  z-index: 1;
-}
-
-.aviatrix-plane-wrap {
-  position: absolute;
-  left: 50%;
-  bottom: 38px;
-  transform: translateX(-50%);
-  z-index: 2;
-  animation: aeroPlaneAscend 2.8s ease-in-out infinite;
-}
-
-.aviatrix-plane-svg {
-  width: 80px;
-  height: 36px;
-  filter: drop-shadow(0 0 12px rgba(0, 204, 68, 0.5));
-}
-
-.aviatrix-thrust {
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 16px;
-  background: linear-gradient(to bottom, #ffd700, transparent);
-  border-radius: 4px;
-  animation: aeroAfterburnFlicker 0.35s ease-in-out infinite alternate;
-}
-
-/* ================================================================
-   LABU RUN ANIMATION — Forest green & earthy
-   ================================================================ */
-
-.anim-laburun-bg {
-  background: linear-gradient(180deg, #2d5a2d 0%, #1a3a1a 60%, #8b6914 95%, #5a4510 100%);
-}
-
-.laburun-tree {
-  position: absolute;
-  bottom: 40%;
-  width: 0;
-  height: 0;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-bottom: 28px solid rgba(74, 122, 58, 0.6);
-  z-index: 1;
-  animation: laburunTreeFloat 5s ease-in-out infinite alternate;
-}
-
-.laburun-tree::after {
-  content: '';
-  position: absolute;
-  top: 14px;
-  left: -3px;
-  width: 6px;
-  height: 12px;
-  background: rgba(90, 60, 20, 0.5);
-  border-radius: 2px;
-}
-
-.laburun-road {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 35%;
-  background: linear-gradient(180deg, #3d2b10, #5a4510);
-  z-index: 1;
-}
-
-.laburun-road-dashes {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 3px;
-  transform: translateY(-50%);
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.2) 0px,
-    rgba(255, 255, 255, 0.2) 20px,
-    transparent 20px,
-    transparent 40px
-  );
-  animation: laburunRoadMove 1s linear infinite;
-}
-
-.laburun-coin {
-  position: absolute;
-  bottom: 38%;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #ffd700;
-  border: 2px solid #c99520;
-  z-index: 2;
-  animation: laburunCoinFloat 2s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-}
-
-.laburun-runner {
-  position: absolute;
-  bottom: 32%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  animation: laburunRunnerBob 0.6s ease-in-out infinite alternate;
-}
-
-.laburun-runner svg {
-  width: 28px;
-  height: 40px;
+.pred-bounce {
+  animation: springBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ================================================================
@@ -1575,120 +1148,4 @@ body {
   margin-top: 8px;
   letter-spacing: 0.5px;
   filter: drop-shadow(0 0 12px rgba(232, 184, 48, 0.3));
-}
-
-/* ================================================================
-   KEYFRAMES FOR GAME ANIMATIONS
-   ================================================================ */
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Aero */
-@keyframes aeroStarTwinkle {
-  0% { opacity: 0.3; transform: scale(0.8); }
-  100% { opacity: 1; transform: scale(1.2); }
-}
-
-@keyframes aeroSpeedLine {
-  0% { transform: translateY(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(320px); opacity: 0; }
-}
-
-@keyframes aeroGlowPulse {
-  0%, 100% { opacity: 0.5; box-shadow: 0 0 8px #00bfff; }
-  50% { opacity: 1; box-shadow: 0 0 20px #00bfff, 0 0 40px rgba(0, 191, 255, 0.4); }
-}
-
-@keyframes aeroPlaneAscend {
-  0% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-40px); }
-  100% { transform: translateX(-50%) translateY(0); }
-}
-
-@keyframes aeroAfterburnFlicker {
-  0% { opacity: 0.6; height: 16px; }
-  100% { opacity: 1; height: 24px; }
-}
-
-/* JetX */
-@keyframes jetxGridScroll {
-  0% { transform: translateY(0); opacity: 0.3; }
-  50% { opacity: 0.8; }
-  100% { transform: translateY(40px); opacity: 0; }
-}
-
-@keyframes jetxNeonFloat {
-  0% { opacity: 0.4; transform: translateY(0) scale(0.8); }
-  100% { opacity: 1; transform: translateY(-8px) scale(1.2); }
-}
-
-@keyframes jetxHaloPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-  50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.6; }
-}
-
-/* Aviator */
-@keyframes aviatorVignettePulse {
-  0% { opacity: 0.6; }
-  100% { opacity: 1; }
-}
-
-@keyframes aviatorSparkFloat {
-  0%, 100% { opacity: 0.3; transform: translateY(0); }
-  50% { opacity: 1; transform: translateY(-10px); }
-}
-
-@keyframes aviatorTrailPulse {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.6; }
-}
-
-/* Aviatrix */
-@keyframes aviatrixNodePulse {
-  0%, 100% { opacity: 0.4; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 14px #ffd700, 0 0 28px rgba(255, 215, 0, 0.3); }
-}
-
-@keyframes aviatrixParticleRise {
-  0% { transform: translateY(0); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 0.8; }
-  100% { transform: translateY(-280px); opacity: 0; }
-}
-
-@keyframes aviatrixCenterPulse {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-  100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.9; }
-}
-
-/* Labu Run */
-@keyframes laburunTreeFloat {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-6px); }
-}
-
-@keyframes laburunRoadMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 40px 0; }
-}
-
-@keyframes laburunCoinFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes laburunRunnerBob {
-  0% { transform: translateX(-50%) translateY(0); }
-  100% { transform: translateX(-50%) translateY(-4px); }
-}
-
-/* Labu grid */
-@keyframes labuTileReveal {
-  0% { transform: scale(0.8); opacity: 0.4; }
-  100% { transform: scale(1); opacity: 1; }
 }

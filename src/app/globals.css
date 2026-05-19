@@ -288,7 +288,7 @@ body {
   position: relative;
   z-index: 1;
   transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1;
 }
 
 .game:active .game-img {
@@ -513,4 +513,449 @@ body {
 .info-game-item span {
   color: rgba(255, 255, 255, 0.45);
   line-height: 1.4;
+}
+
+/* ================================================================
+   PREDICTION PAGE STYLES
+   ================================================================ */
+
+.pred-root {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: linear-gradient(145deg, #0a1628, #0f1f3d, #162040, #0a1628);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Ambient light */
+.pred-ambient {
+  position: fixed;
+  top: -40%;
+  left: -20%;
+  width: 140%;
+  height: 80%;
+  background: radial-gradient(ellipse, rgba(232, 184, 48, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: ambientDrift 8s ease-in-out infinite alternate;
+}
+
+/* Header */
+.pred-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) 20px 12px;
+  background: rgba(10, 22, 40, 0.75);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  animation: slideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.pred-header-left {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.pred-logo {
+  font-size: 20px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #e8b830, #f7dc8a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+.pred-header-sub {
+  font-size: 12px;
+  color: #7b8da4;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.pred-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pred-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: statusPulse 1.5s ease-in-out infinite;
+}
+
+.pred-status-text {
+  font-size: 12px;
+  color: #7b8da4;
+  font-weight: 500;
+}
+
+/* Content */
+.pred-content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 72px) 20px 20px;
+  max-width: 460px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Game Title */
+.pred-game-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 20px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+  letter-spacing: 0.5px;
+}
+
+/* Game Preview */
+.pred-preview {
+  width: 100%;
+  margin-bottom: 28px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+.pred-preview-glass {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pred-preview-gradient-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(10, 22, 40, 0.6), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pred-preview-gradient-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to top, rgba(10, 22, 40, 0.6), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pred-preview-img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 20px;
+  z-index: 1;
+  opacity: 0.9;
+}
+
+/* Prediction Card */
+.pred-card {
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  padding: 2px;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+  background: linear-gradient(135deg, rgba(232, 184, 48, 0.4), rgba(201, 149, 32, 0.15), rgba(232, 184, 48, 0.4));
+  overflow: hidden;
+}
+
+.pred-card-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(232, 184, 48, 0.08) 45%,
+    rgba(232, 184, 48, 0.15) 50%,
+    rgba(232, 184, 48, 0.08) 55%,
+    transparent 100%
+  );
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pred-card-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  background: rgba(10, 22, 40, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 22px;
+}
+
+.pred-card-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #e8b830;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+}
+
+.pred-card-value {
+  font-size: 2.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #e8b830, #f7dc8a, #e8b830);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin-bottom: 12px;
+  text-shadow: none;
+  filter: drop-shadow(0 0 20px rgba(232, 184, 48, 0.3));
+}
+
+.pred-bounce {
+  animation: springBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pred-card-state {
+  font-size: 12px;
+  color: #7b8da4;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* History */
+.pred-history {
+  width: 100%;
+  margin-bottom: 28px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+}
+
+.pred-history-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: #7b8da4;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.pred-history-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pred-history-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Back Button */
+.pred-back-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+}
+
+.pred-back-btn:active {
+  background: rgba(255, 255, 255, 0.08);
+  transform: scale(0.97);
+}
+
+.pred-back-btn svg {
+  flex-shrink: 0;
+}
+
+/* Footer */
+.pred-footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 16px 20px calc(env(safe-area-inset-bottom, 0px) + 16px);
+  margin-top: auto;
+}
+
+.pred-footer p {
+  font-size: 11px;
+  color: #7b8da4;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+/* Floating Badge */
+.pred-badge {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+  right: 20px;
+  z-index: 90;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(232, 184, 48, 0.2), rgba(232, 184, 48, 0.08));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(232, 184, 48, 0.25);
+  font-size: 12px;
+  font-weight: 800;
+  background-clip: padding-box;
+  color: #e8b830;
+  letter-spacing: 0.5px;
+  animation: badgeFloat 3s ease-in-out infinite;
+}
+
+/* Invalid game */
+.pred-invalid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 40px 20px;
+}
+
+.pred-invalid p {
+  font-size: 18px;
+  color: #7b8da4;
+  font-weight: 600;
+}
+
+/* ================================================================
+   PREDICTION PAGE ANIMATIONS
+   ================================================================ */
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+@keyframes springBounce {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+@keyframes badgeFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes ambientDrift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(30px, 20px) rotate(3deg);
+  }
 }

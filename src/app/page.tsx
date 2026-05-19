@@ -62,11 +62,11 @@ function CloseIcon() {
 /* ───────── GAME DATA ───────── */
 
 const games = [
-  { name: "Aero", slug: "aero", img: "/games/aero.png", provider: "Turbo Games", href: "/prediction/aero" },
-  { name: "JetX", slug: "jetx", img: "/games/jetx.jpg", provider: "SmartSoft", href: "/prediction/jetx" },
-  { name: "Labu Run", slug: "laburun", img: "/games/laburun.png", provider: "PoggiPlay", href: "/prediction/laburun" },
-  { name: "Aviator", slug: "aviator", img: "/games/aviator.jpg", provider: "Spribe", href: "/prediction/aviator" },
-  { name: "Aviatrix", slug: "aviatrix", img: "/games/aviatrix.jpg", provider: "Aviatrix", href: "/prediction/aviatrix" },
+  { name: "Aero", slug: "aero", img: "/games/aero_tile.png", provider: "Turbo Games", href: "/prediction/aero" },
+  { name: "JetX", slug: "jetx", img: "/games/jetx_tile.jpg", provider: "SmartSoft", href: "/prediction/jetx" },
+  { name: "Labu Run", slug: "laburun", img: "/games/laburun_tile.png", provider: "PoggiPlay", href: "/prediction/laburun" },
+  { name: "Aviator", slug: "aviator", img: "/games/aviator_tile.png", provider: "Spribe", href: "/prediction/aviator" },
+  { name: "Aviatrix", slug: "aviatrix", img: "/games/aviatrix_tile.webp", provider: "Aviatrix", href: "/prediction/aviatrix" },
 ];
 
 /* ───────── MAIN PAGE ───────── */
@@ -199,7 +199,7 @@ export default function Home() {
                 alt={game.name}
                 className="game-img"
                 width={400}
-                height={300}
+                height={400}
                 loading="lazy"
               />
             </div>

@@ -959,3 +959,736 @@ body {
     transform: translate(30px, 20px) rotate(3deg);
   }
 }
+
+/* ================================================================
+   ANIMATION VIEWPORT (280px, shared base)
+   ================================================================ */
+
+.anim-viewport {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.anim-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ================================================================
+   PREDIRE BUTTON (Gold gradient)
+   ================================================================ */
+
+.predire-btn {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #f7dc8a, #e8b830, #c99520);
+  color: #0a1628;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  margin-top: 24px;
+  transition: all 0.2s;
+  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+  box-shadow: 0 4px 20px rgba(232, 184, 48, 0.3);
+}
+
+.predire-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 10px rgba(232, 184, 48, 0.2);
+}
+
+.predire-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.predire-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.predire-spinner-svg {
+  animation: spin 0.8s linear infinite;
+}
+
+/* Update back button to match spec */
+.pred-back-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: #7b8da4;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 12px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+}
+
+.pred-back-btn:active {
+  background: rgba(255, 255, 255, 0.08);
+  transform: scale(0.97);
+}
+
+.pred-back-btn svg {
+  flex-shrink: 0;
+}
+
+/* ================================================================
+   AERO ANIMATION — Deep blue & cyan
+   ================================================================ */
+
+.anim-aero-bg {
+  background: linear-gradient(180deg, #0a1628 0%, #003366 50%, #0a1628 100%);
+}
+
+.aero-star {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+  animation: aeroStarTwinkle 2s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+.aero-speed-line {
+  position: absolute;
+  top: -40px;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, #00bfff, transparent);
+  border-radius: 2px;
+  animation: aeroSpeedLine 1.2s linear infinite;
+  z-index: 1;
+}
+
+.aero-glow-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00bfff;
+  animation: aeroGlowPulse 2s ease-in-out infinite;
+  z-index: 1;
+  box-shadow: 0 0 12px #00bfff, 0 0 24px rgba(0, 191, 255, 0.4);
+}
+
+.aero-plane-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: aeroPlaneAscend 3s ease-in-out infinite;
+}
+
+.aero-plane-svg {
+  width: 80px;
+  height: 32px;
+  filter: drop-shadow(0 0 12px rgba(0, 191, 255, 0.5));
+}
+
+.aero-afterburn {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(to bottom, #ff6b00, transparent);
+  border-radius: 4px;
+  animation: aeroAfterburnFlicker 0.3s ease-in-out infinite alternate;
+}
+
+/* ================================================================
+   JETX ANIMATION — Dark purple & magenta
+   ================================================================ */
+
+.anim-jetx-bg {
+  background: linear-gradient(180deg, #1a0033 0%, #6600cc 50%, #1a0033 100%);
+}
+
+.jetx-grid-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.12), transparent);
+  animation: jetxGridScroll 2s linear infinite;
+  z-index: 1;
+}
+
+.jetx-neon-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ff00ff;
+  animation: jetxNeonFloat 2s ease-in-out infinite alternate;
+  z-index: 1;
+  box-shadow: 0 0 8px #ff00ff, 0 0 16px rgba(255, 0, 255, 0.4);
+}
+
+.jetx-speed-line {
+  position: absolute;
+  top: -40px;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, #ff00ff, transparent);
+  border-radius: 2px;
+  animation: aeroSpeedLine 1s linear infinite;
+  z-index: 1;
+  filter: blur(1px);
+}
+
+.jetx-halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 0, 255, 0.15);
+  animation: jetxHaloPulse 3s ease-in-out infinite;
+  z-index: 1;
+}
+
+.jetx-rocket-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 35px;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: aeroPlaneAscend 2.5s ease-in-out infinite;
+}
+
+.jetx-rocket-svg {
+  width: 80px;
+  height: 40px;
+  filter: drop-shadow(0 0 12px rgba(255, 0, 255, 0.5));
+}
+
+.jetx-flame-trail {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 24px;
+  background: linear-gradient(to bottom, #ff4500, rgba(255, 0, 255, 0.5), transparent);
+  border-radius: 6px;
+  animation: aeroAfterburnFlicker 0.25s ease-in-out infinite alternate;
+}
+
+/* ================================================================
+   AVIATOR ANIMATION — Red & black, minimalist
+   ================================================================ */
+
+.anim-aviator-bg {
+  background: linear-gradient(180deg, #1a0000 0%, #330000 50%, #1a0000 100%);
+}
+
+.aviator-vignette-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 60%, rgba(204, 0, 0, 0.15), transparent 60%);
+  z-index: 1;
+  animation: aviatorVignettePulse 4s ease-in-out infinite alternate;
+}
+
+.aviator-graph-curve {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.aviator-spark {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #cc0000;
+  animation: aviatorSparkFloat 3s ease-in-out infinite;
+  z-index: 1;
+  box-shadow: 0 0 6px #cc0000;
+}
+
+.aviator-plane-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 45px;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: aeroPlaneAscend 3.5s ease-in-out infinite;
+}
+
+.aviator-plane-svg {
+  width: 36px;
+  height: 36px;
+  filter: drop-shadow(0 0 10px rgba(204, 0, 0, 0.6));
+}
+
+.aviator-trail-dot {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  animation: aviatorTrailPulse 1.5s ease-in-out infinite;
+}
+
+/* ================================================================
+   AVIATRIX ANIMATION — Blockchain green & gold
+   ================================================================ */
+
+.anim-aviatrix-bg {
+  background: linear-gradient(180deg, #0a2010 0%, #003300 50%, #0a2010 100%);
+}
+
+.aviatrix-connect-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.aviatrix-node-dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffd700;
+  animation: aviatrixNodePulse 2.5s ease-in-out infinite;
+  z-index: 1;
+  box-shadow: 0 0 8px #ffd700, 0 0 16px rgba(255, 215, 0, 0.3);
+}
+
+.aviatrix-gold-particle {
+  position: absolute;
+  bottom: -10px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffd700;
+  animation: aviatrixParticleRise 3s ease-in infinite;
+  z-index: 1;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
+}
+
+.aviatrix-center-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 204, 68, 0.12), transparent 70%);
+  animation: aviatrixCenterPulse 4s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+.aviatrix-plane-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 38px;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: aeroPlaneAscend 2.8s ease-in-out infinite;
+}
+
+.aviatrix-plane-svg {
+  width: 80px;
+  height: 36px;
+  filter: drop-shadow(0 0 12px rgba(0, 204, 68, 0.5));
+}
+
+.aviatrix-thrust {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 16px;
+  background: linear-gradient(to bottom, #ffd700, transparent);
+  border-radius: 4px;
+  animation: aeroAfterburnFlicker 0.35s ease-in-out infinite alternate;
+}
+
+/* ================================================================
+   LABU RUN ANIMATION — Forest green & earthy
+   ================================================================ */
+
+.anim-laburun-bg {
+  background: linear-gradient(180deg, #2d5a2d 0%, #1a3a1a 60%, #8b6914 95%, #5a4510 100%);
+}
+
+.laburun-tree {
+  position: absolute;
+  bottom: 40%;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 28px solid rgba(74, 122, 58, 0.6);
+  z-index: 1;
+  animation: laburunTreeFloat 5s ease-in-out infinite alternate;
+}
+
+.laburun-tree::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: -3px;
+  width: 6px;
+  height: 12px;
+  background: rgba(90, 60, 20, 0.5);
+  border-radius: 2px;
+}
+
+.laburun-road {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(180deg, #3d2b10, #5a4510);
+  z-index: 1;
+}
+
+.laburun-road-dashes {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 0px,
+    rgba(255, 255, 255, 0.2) 20px,
+    transparent 20px,
+    transparent 40px
+  );
+  animation: laburunRoadMove 1s linear infinite;
+}
+
+.laburun-coin {
+  position: absolute;
+  bottom: 38%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffd700;
+  border: 2px solid #c99520;
+  z-index: 2;
+  animation: laburunCoinFloat 2s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.laburun-runner {
+  position: absolute;
+  bottom: 32%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  animation: laburunRunnerBob 0.6s ease-in-out infinite alternate;
+}
+
+.laburun-runner svg {
+  width: 28px;
+  height: 40px;
+}
+
+/* ================================================================
+   LABU RUN GRID & DIFFICULTY SELECTOR
+   ================================================================ */
+
+.labu-difficulty {
+  width: 100%;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+}
+
+.labu-difficulty-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: #7b8da4;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.labu-difficulty-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.labu-diff-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #7b8da4;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.labu-diff-btn.active {
+  background: rgba(232, 184, 48, 0.15);
+  border-color: rgba(232, 184, 48, 0.3);
+  color: #e8b830;
+  box-shadow: 0 0 12px rgba(232, 184, 48, 0.1);
+}
+
+.labu-diff-btn:active {
+  transform: scale(0.96);
+}
+
+.labu-prediction-area {
+  width: 100%;
+  margin-bottom: 8px;
+  min-height: 60px;
+}
+
+.labu-idle-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.labu-idle-msg span {
+  font-size: 13px;
+  color: #7b8da4;
+  text-align: center;
+}
+
+.labu-analyzing-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.labu-analyzing-msg span {
+  font-size: 13px;
+  color: #7b8da4;
+}
+
+.labu-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.labu-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 100%;
+}
+
+.labu-tile {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.labu-tile-safe {
+  background: rgba(0, 230, 118, 0.15);
+  border-color: rgba(0, 230, 118, 0.4);
+  box-shadow: 0 0 10px rgba(0, 230, 118, 0.15);
+  animation: labuTileReveal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: var(--tile-delay, 0s);
+}
+
+.labu-tile-start {
+  border-color: rgba(0, 230, 118, 0.6);
+}
+
+.labu-tile-end {
+  border-color: rgba(255, 215, 64, 0.6);
+  background: rgba(255, 215, 64, 0.12);
+  box-shadow: 0 0 12px rgba(255, 215, 64, 0.15);
+}
+
+.labu-tile-icon {
+  width: 20px;
+  height: 26px;
+}
+
+.labu-flag-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.labu-safe-count {
+  font-size: 12px;
+  color: #00e676;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.labu-mult-result {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #e8b830;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+  filter: drop-shadow(0 0 12px rgba(232, 184, 48, 0.3));
+}
+
+/* ================================================================
+   KEYFRAMES FOR GAME ANIMATIONS
+   ================================================================ */
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Aero */
+@keyframes aeroStarTwinkle {
+  0% { opacity: 0.3; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes aeroSpeedLine {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(320px); opacity: 0; }
+}
+
+@keyframes aeroGlowPulse {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 8px #00bfff; }
+  50% { opacity: 1; box-shadow: 0 0 20px #00bfff, 0 0 40px rgba(0, 191, 255, 0.4); }
+}
+
+@keyframes aeroPlaneAscend {
+  0% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-40px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes aeroAfterburnFlicker {
+  0% { opacity: 0.6; height: 16px; }
+  100% { opacity: 1; height: 24px; }
+}
+
+/* JetX */
+@keyframes jetxGridScroll {
+  0% { transform: translateY(0); opacity: 0.3; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(40px); opacity: 0; }
+}
+
+@keyframes jetxNeonFloat {
+  0% { opacity: 0.4; transform: translateY(0) scale(0.8); }
+  100% { opacity: 1; transform: translateY(-8px) scale(1.2); }
+}
+
+@keyframes jetxHaloPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.6; }
+}
+
+/* Aviator */
+@keyframes aviatorVignettePulse {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+@keyframes aviatorSparkFloat {
+  0%, 100% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-10px); }
+}
+
+@keyframes aviatorTrailPulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.6; }
+}
+
+/* Aviatrix */
+@keyframes aviatrixNodePulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 14px #ffd700, 0 0 28px rgba(255, 215, 0, 0.3); }
+}
+
+@keyframes aviatrixParticleRise {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(-280px); opacity: 0; }
+}
+
+@keyframes aviatrixCenterPulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.9; }
+}
+
+/* Labu Run */
+@keyframes laburunTreeFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+@keyframes laburunRoadMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}
+
+@keyframes laburunCoinFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes laburunRunnerBob {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-4px); }
+}
+
+/* Labu grid */
+@keyframes labuTileReveal {
+  0% { transform: scale(0.8); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}

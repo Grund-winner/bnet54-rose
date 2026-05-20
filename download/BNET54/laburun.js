@@ -1,117 +1,255 @@
-/* BNET54 - Labu Run Prediction (Runner Game) */
+/* BNET54 - Labu Run Prediction */
 (function () {
   'use strict';
 
-  var predStatus = 'idle';
-  var difficulty = 'moyen';
-  var safePath = [];
+  /* ---- Config ---- */
+  var GAME_MODES = {
+    facile:   [1.10, 1.20, 1.30, 1.50, 1.80, 2.00, 2.50, 3.00, 4.00, 5.50, 7.50, 10.00],
+    moyen:    [1.20, 1.50, 1.70, 2.00, 3.00, 4.50, 6.00, 8.50, 12.00],
+    difficile:[1.40, 2.00, 4.00, 8.00, 15.00],
+    hardcore: [1.60, 2.50, 5.00, 10.00]
+  };
 
-  var predireBtn = document.getElementById('predireBtn');
-  var statusDot = document.getElementById('statusDot');
-  var statusText = document.getElementById('statusText');
-  var labuIdleMsg = document.getElementById('labuIdleMsg');
-  var labuAnalyzingMsg = document.getElementById('labuAnalyzingMsg');
-  var labuGridWrapper = document.getElementById('labuGridWrapper');
-  var labuGrid = document.getElementById('labuGrid');
-  var labuSafeCount = document.getElementById('labuSafeCount');
-  var labuMultResult = document.getElementById('labuMultResult');
+  var CIRCLES = 8;
+  var HOP_DELAY = 480;
 
-  function getDiffRows(d) { return d === 'facile' ? 3 : d === 'difficile' ? 8 : 5; }
-  function genRunnerMult(d) {
-    var r = d === 'facile' ? [1.5, 2.5] : d === 'difficile' ? [4.0, 8.0] : [2.5, 4.0];
-    var v = r[0] + Math.random() * (r[1] - r[0]);
-    return (Math.round(v * 100) / 100).toFixed(2);
-  }
-  function genSafePath(cols, maxRows, totalRows) {
-    var path = [], col = Math.floor(Math.random() * cols);
-    for (var i = 0; i < maxRows; i++) {
-      path.push({ row: totalRows - 1 - i, col: col });
-      col = Math.max(0, Math.min(cols - 1, col + Math.floor(Math.random() * 3) - 1));
-    }
-    return path;
-  }
+  /* ---- State ---- */
+  var currentMode = 'facile';
+  var isRunning = false;
 
-  function renderGrid() {
-    labuGrid.innerHTML = '';
-    var COLS = 5, ROWS = 8;
-    var safeSet = {};
-    for (var s = 0; s < safePath.length; s++) {
-      safeSet[safePath[s].row + '-' + safePath[s].col] = s;
-    }
-    for (var row = 0; row < ROWS; row++) {
-      for (var col = 0; col < COLS; col++) {
-        var key = row + '-' + col;
-        var pidx = safeSet[key];
-        var isSafe = pidx !== undefined;
-        var isStart = row === ROWS - 1 && isSafe;
-        var isEnd = isSafe && pidx === safePath.length - 1 && safePath.length > 0;
-
-        var tile = document.createElement('div');
-        tile.className = 'labu-tile';
-        if (isSafe) { tile.classList.add('labu-tile-safe'); tile.style.animationDelay = (pidx * 0.15) + 's'; }
-        if (isStart) tile.classList.add('labu-tile-start');
-        if (isEnd) tile.classList.add('labu-tile-end');
-
-        if (isStart) {
-          tile.innerHTML = '<svg class="labu-tile-icon" viewBox="0 0 24 32" fill="none"><circle cx="12" cy="5" r="4" fill="#4a7a3a"/><path d="M12 9 L12 20 M12 14 L7 17 M12 14 L17 17 M12 20 L8 28 M12 20 L16 28" stroke="#4a7a3a" stroke-width="2" stroke-linecap="round"/></svg>';
-        }
-        if (isEnd && !isStart) {
-          tile.innerHTML = '<svg class="labu-tile-icon labu-flag-icon" viewBox="0 0 24 24" fill="none"><path d="M8 4 L8 20" stroke="#ffd740" stroke-width="2" stroke-linecap="round"/><path d="M8 4 L20 7 L8 10" fill="#ffd740"/></svg>';
-        }
-        labuGrid.appendChild(tile);
-      }
-    }
-    labuSafeCount.textContent = safePath.length + ' cases securisees';
+  /* ---- DOM ---- */
+  var predireBtn    = document.getElementById('predireBtn');
+  var statusDot     = document.getElementById('statusDot');
+  var statusText    = document.getElementById('statusText');
+  var labuTunnel    = document.getElementById('labuTunnel');
+  var labuRabbit    = document.getElementById('labuRabbit');
+  var rabbitAlive   = document.getElementById('rabbitAlive');
+  var rabbitDead    = document.getElementById('rabbitDead');
+  var labuResult    = document.getElementById('labuResult');
+  var resultMult    = document.getElementById('resultMult');
+  var labuLoading   = document.getElementById('labuLoading');
+  var modeButtons   = document.querySelectorAll('.labu-mode-btn');
+  var circleEls     = [];
+  for (var i = 0; i < CIRCLES; i++) {
+    circleEls.push(document.getElementById('c' + i));
   }
 
-  // Difficulty buttons
-  var diffBtns = document.querySelectorAll('.labu-diff-btn');
-  for (var d = 0; d < diffBtns.length; d++) {
+  /* ---- Helpers ---- */
+  function getCirclePos(el) {
+    var tunnelRect = labuTunnel.getBoundingClientRect();
+    var cRect = el.getBoundingClientRect();
+    return {
+      left: cRect.left - tunnelRect.left + cRect.width / 2,
+      bottom: tunnelRect.bottom - cRect.bottom
+    };
+  }
+
+  function weightedRandom(mode) {
+    var mults = GAME_MODES[mode];
+    var weights = [];
+    for (var i = 0; i < mults.length; i++) {
+      var v = mults[i];
+      if (v <= 2) weights.push(50);
+      else if (v <= 5) weights.push(20);
+      else if (v <= 10) weights.push(8);
+      else weights.push(2);
+    }
+    var total = 0;
+    for (var j = 0; j < weights.length; j++) total += weights[j];
+    var r = Math.random() * total;
+    for (var k = 0; k < mults.length; k++) {
+      if (r < weights[k]) return mults[k];
+      r -= weights[k];
+    }
+    return mults[mults.length - 1];
+  }
+
+  function hopCountForMult(mult) {
+    if (mult <= 1.5) return Math.floor(Math.random() * 2) + 2;
+    if (mult <= 3) return Math.floor(Math.random() * 2) + 3;
+    if (mult <= 6) return Math.floor(Math.random() * 2) + 4;
+    if (mult <= 12) return Math.floor(Math.random() * 2) + 5;
+    return Math.floor(Math.random() * 2) + 6;
+  }
+
+  function wait(ms) {
+    return new Promise(function (resolve) { setTimeout(resolve, ms); });
+  }
+
+  /* ---- Circle Management ---- */
+  function resetCircles() {
+    for (var i = 0; i < circleEls.length; i++) {
+      circleEls[i].className = 'labu-circle';
+      var lbl = circleEls[i].querySelector('.circle-mult');
+      if (lbl) lbl.remove();
+    }
+  }
+
+  function lightCircle(idx, mult, isFinal) {
+    var el = circleEls[idx];
+    el.classList.add(isFinal ? 'final' : 'lit');
+    var lbl = document.createElement('span');
+    lbl.className = 'circle-mult';
+    lbl.textContent = mult + 'x';
+    el.appendChild(lbl);
+  }
+
+  /* ---- Rabbit Management ---- */
+  function positionRabbit(circleIdx) {
+    var pos = getCirclePos(circleEls[circleIdx]);
+    labuRabbit.style.left = pos.left + 'px';
+    labuRabbit.style.bottom = pos.bottom + 'px';
+  }
+
+  function resetRabbit() {
+    rabbitAlive.style.display = '';
+    rabbitDead.style.display = 'none';
+    labuRabbit.classList.remove('dead', 'hopping');
+    labuRabbit.classList.add('idle');
+  }
+
+  function showDeadRabbit() {
+    rabbitAlive.style.display = 'none';
+    rabbitDead.style.display = '';
+    labuRabbit.classList.remove('idle');
+    labuRabbit.classList.add('dead');
+  }
+
+  /* ---- Result ---- */
+  function showResult(mult, success) {
+    labuResult.style.display = '';
+    labuResult.className = 'labu-result-badge' + (success ? '' : ' fail');
+    resultMult.textContent = mult + 'x';
+  }
+
+  function hideResult() {
+    labuResult.style.display = 'none';
+  }
+
+  /* ---- Hop Animation ---- */
+  function hopTo(circleIdx) {
+    return new Promise(function (resolve) {
+      labuRabbit.classList.remove('idle', 'hopping');
+      void labuRabbit.offsetWidth;
+      labuRabbit.classList.add('hopping');
+      positionRabbit(circleIdx);
+      setTimeout(function () {
+        labuRabbit.classList.remove('hopping');
+        resolve();
+      }, HOP_DELAY);
+    });
+  }
+
+  /* ---- Mode Buttons ---- */
+  for (var b = 0; b < modeButtons.length; b++) {
     (function (btn) {
       btn.addEventListener('click', function () {
-        difficulty = btn.getAttribute('data-diff');
-        for (var i = 0; i < diffBtns.length; i++) diffBtns[i].classList.toggle('active', diffBtns[i].getAttribute('data-diff') === difficulty);
+        if (isRunning) return;
+        currentMode = btn.getAttribute('data-mode');
+        for (var j = 0; j < modeButtons.length; j++) {
+          modeButtons[j].classList.toggle('active', modeButtons[j].getAttribute('data-mode') === currentMode);
+        }
       });
-    })(diffBtns[d]);
+    })(modeButtons[b]);
   }
 
-  // PREDIRE
+  /* ---- PREDIRE ---- */
   predireBtn.addEventListener('click', function () {
-    if (predStatus === 'predicting') return;
-    predStatus = 'predicting';
+    if (isRunning) return;
+    isRunning = true;
     predireBtn.disabled = true;
-    predireBtn.innerHTML = '<span class="predire-loading"><svg viewBox="0 0 24 24" width="20" height="20" class="predire-spinner-svg"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg> Analyse...</span>';
-    statusDot.style.backgroundColor = '#e8b830';
+
+    /* Status */
+    statusDot.style.backgroundColor = '#00e676';
     statusText.textContent = 'Analyse...';
-    labuIdleMsg.style.display = 'none';
-    labuAnalyzingMsg.style.display = 'flex';
-    labuGridWrapper.style.display = 'none';
-    labuMultResult.style.display = 'none';
+
+    /* Show loading */
+    labuLoading.style.display = '';
+    hideResult();
+    resetCircles();
+    resetRabbit();
+    positionRabbit(0);
 
     setTimeout(function () {
-      var maxRows = getDiffRows(difficulty);
-      safePath = genSafePath(5, maxRows, 8);
-      var m = genRunnerMult(difficulty);
+      labuLoading.style.display = 'none';
 
-      labuAnalyzingMsg.style.display = 'none';
-      labuGridWrapper.style.display = 'flex';
-      renderGrid();
+      /* Generate prediction */
+      var mult = weightedRandom(currentMode);
+      var hops = Math.min(hopCountForMult(mult), CIRCLES - 1);
+      var success = Math.random() < 0.78;
 
-      labuMultResult.textContent = 'Multiplicateur: x' + m;
-      labuMultResult.style.display = 'block';
-      labuMultResult.style.animation = 'none';
-      labuMultResult.offsetHeight;
-      labuMultResult.style.animation = '';
+      /* Generate step multipliers (increasing toward final) */
+      var stepMults = [];
+      for (var s = 0; s <= hops; s++) {
+        var t = (s + 1) / (hops + 1);
+        var stepM = (mult * (0.3 + 0.7 * t));
+        stepM = Math.round(stepM * 100) / 100;
+        stepM = Math.max(1.10, stepM);
+        stepMults.push(stepM);
+      }
+      stepMults[stepMults.length - 1] = mult;
 
-      statusDot.style.backgroundColor = '#00e676';
-      statusText.textContent = 'Signal actif';
-      predStatus = 'active';
-      predireBtn.disabled = false;
-      predireBtn.innerHTML = 'PREDIRE';
-    }, 2000);
+      /* Run hop sequence */
+      runHopSequence(stepMults, hops, mult, success);
+    }, 2200);
   });
 
-  // Anti-zoom
+  function runHopSequence(stepMults, finalHop, mult, success) {
+    var idx = 0;
+
+    function nextHop() {
+      if (idx <= finalHop) {
+        var isFinal = (idx === finalHop);
+        lightCircle(idx, stepMults[idx], isFinal);
+        hopTo(idx).then(function () {
+          idx++;
+          if (idx <= finalHop) {
+            setTimeout(nextHop, 200);
+          } else {
+            /* Reached final circle */
+            setTimeout(function () {
+              if (success) {
+                labuRabbit.classList.add('idle');
+                showResult(mult, true);
+                statusDot.style.backgroundColor = '#00e676';
+                statusText.textContent = 'Signal actif';
+              } else {
+                showDeadRabbit();
+                showResult(mult, false);
+                statusDot.style.backgroundColor = '#ff5252';
+                statusText.textContent = 'Chute detectee';
+              }
+              isRunning = false;
+              predireBtn.disabled = false;
+            }, 400);
+          }
+        });
+      }
+    }
+
+    setTimeout(nextHop, 300);
+  }
+
+  /* ---- Init ---- */
+  function init() {
+    resetCircles();
+    resetRabbit();
+    hideResult();
+    /* Wait for layout, then position rabbit on first circle */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        positionRabbit(0);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  /* Anti-zoom */
   var pz = function (e) { if (e.touches && e.touches.length > 1) e.preventDefault(); };
   document.addEventListener('touchstart', pz, { passive: false });
   document.addEventListener('touchmove', pz, { passive: false });

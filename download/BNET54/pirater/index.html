@@ -3,59 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <meta name="theme-color" content="#0a0a1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>BNET54 - Pirater</title>
   <link rel="icon" href="../assets/logo.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="pir-header">
-    <a href="../index.html" class="pir-back">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-    </a>
-    <div class="pir-title-wrap">
-      <span class="pir-skull">&#9760;</span>
+
+  <!-- Top bar -->
+  <div class="pir-topbar">
+    <div class="pir-topbar-inner">
+      <div class="pir-topbar-left">
+        <a href="../index.html" class="pir-back-link">&larr;</a>
+      </div>
       <span class="pir-brand">BNET54</span>
+      <div style="width:36px"></div>
     </div>
-    <div class="pir-sub">Pirater</div>
-  </header>
+  </div>
 
-  <section class="pir-subtitle">
-    <h2>Prediction des gros coefficients</h2>
-    <p class="pir-desc">Coefficients 10x - 25x</p>
-  </section>
+  <!-- Header -->
+  <div class="pir-header-section">
+    <div class="pir-skull-deco">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a9 9 0 00-9 9c0 3.07 1.64 5.64 4 7.1V22h10v-3.9c2.36-1.46 4-4.03 4-7.1a9 9 0 00-9-9zm-2.5 11a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm-7 1l-.5 3h7l-.5-3H7.5z" fill="url(#skullGrad)"/><defs><linearGradient id="skullGrad" x1="3" y1="2" x2="21" y2="22"><stop stop-color="#ff4444"/><stop offset="1" stop-color="#ff6b35"/></linearGradient></defs></svg>
+    </div>
+    <h1>Pirater</h1>
+    <p>Prediction des gros coefficients</p>
+  </div>
 
-  <main class="pir-grid">
-    <a class="pir-game" href="aviator.html">
-      <div class="pir-card">
-        <div class="pir-glow"></div>
-        <img src="../assets/games/aviator_tile.png" alt="Aviator" class="pir-img" loading="lazy">
-        <span class="pir-badge">POPULAIRE</span>
-      </div>
-    </a>
-    <a class="pir-game" href="aero.html">
-      <div class="pir-card">
-        <div class="pir-glow"></div>
-        <img src="../assets/games/aero_tile.png" alt="Aero" class="pir-img" loading="lazy">
-      </div>
-    </a>
-    <a class="pir-game" href="jetx.html">
-      <div class="pir-card">
-        <div class="pir-glow"></div>
-        <img src="../assets/games/jetx_tile.jpg" alt="JetX" class="pir-img" loading="lazy">
-        <span class="pir-badge pir-badge-premium">PREMIUM</span>
-      </div>
-    </a>
-    <a class="pir-game" href="aviatrix.html">
-      <div class="pir-card">
-        <div class="pir-glow"></div>
-        <img src="../assets/games/aviatrix_tile.webp" alt="Aviatrix" class="pir-img" loading="lazy">
-      </div>
-    </a>
-  </main>
+  <!-- Games grid -->
+  <div class="pir-games-grid">
 
-  <footer class="pir-footer">
-    <p>BNET54 Pirater 2025</p>
-  </footer>
+    <a class="pir-game-link" href="aviator.html">
+      <div class="pir-game-card">
+        <div class="pir-game-glow"></div>
+        <img class="pir-game-img" src="../assets/games/aviator_tile.png" alt="Aviator" loading="lazy">
+        <div class="pir-badge pir-badge-hot">Populaire</div>
+      </div>
+    </a>
+
+    <a class="pir-game-link" href="aero.html">
+      <div class="pir-game-card">
+        <div class="pir-game-glow"></div>
+        <img class="pir-game-img" src="../assets/games/aero_tile.png" alt="Aero" loading="lazy">
+        <div class="pir-badge pir-badge-hot">Populaire</div>
+      </div>
+    </a>
+
+    <a class="pir-game-link" href="jetx.html">
+      <div class="pir-game-card">
+        <div class="pir-game-glow"></div>
+        <img class="pir-game-img" src="../assets/games/jetx_tile.jpg" alt="JetX" loading="lazy">
+      </div>
+    </a>
+
+    <a class="pir-game-link" href="aviatrix.html">
+      <div class="pir-game-card">
+        <div class="pir-game-glow"></div>
+        <img class="pir-game-img" src="../assets/games/aviatrix_tile.webp" alt="Aviatrix" loading="lazy">
+        <div class="pir-badge pir-badge-premium">Premium</div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="pir-footer">
+    <p>Tout droit r&eacute;serv&eacute; &agrave; BNET54</p>
+  </div>
+
+  <!-- Anti-zoom -->
+  <script>
+  (function(){
+    var lt=0;
+    document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault()},{passive:false});
+    document.addEventListener('touchmove',function(e){if(e.touches.length>1)e.preventDefault()},{passive:false});
+    document.addEventListener('touchend',function(e){var n=Date.now();if(n-lt<=300)e.preventDefault();lt=n},{passive:false});
+    document.addEventListener('gesturestart',function(e){e.preventDefault()},{passive:false});
+    document.addEventListener('gesturechange',function(e){e.preventDefault()},{passive:false});
+    document.addEventListener('gestureend',function(e){e.preventDefault()},{passive:false});
+    document.addEventListener('wheel',function(e){if(e.ctrlKey||e.metaKey)e.preventDefault()},{passive:false});
+    document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&(e.key==='+'||e.key==='-'||e.key==='='||e.key==='0'))e.preventDefault()});
+    window.addEventListener('resize',function(){setTimeout(function(){var vp=document.querySelector('meta[name="viewport"]');if(vp)vp.setAttribute('content','width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover')},100)});
+    setTimeout(function(){var vp=document.querySelector('meta[name="viewport"]');if(vp)vp.setAttribute('content','width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover')},500);
+  })();
+  </script>
 </body>
 </html>

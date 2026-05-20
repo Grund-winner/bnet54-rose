@@ -3,47 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <meta name="theme-color" content="#0a0a1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>BNET54 - Pirater - Aviatrix</title>
   <link rel="icon" href="../assets/logo.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="pir-pred-ambient"></div>
-  <header class="pir-pred-header">
-    <div class="pir-pred-header-left">
-      <span class="pir-pred-logo">BNET54</span>
-      <span class="pir-pred-header-sub">Pirater</span>
+
+  <!-- Header -->
+  <div class="pir-game-header">
+    <div class="pir-game-header-left">
+      <a href="index.html" class="pir-back-link">&larr;</a>
+      <span class="pir-game-header-brand">BNET54</span>
+      <span class="pir-game-header-sub">Pirater</span>
     </div>
-    <div class="pir-pred-header-right">
-      <span class="pir-pred-status-dot" id="statusDot"></span>
-      <span class="pir-pred-status-text" id="statusText">Pret</span>
+    <div class="pir-game-header-skull">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a9 9 0 00-9 9c0 3.07 1.64 5.64 4 7.1V22h10v-3.9c2.36-1.46 4-4.03 4-7.1a9 9 0 00-9-9zm-2.5 11a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm-7 1l-.5 3h7l-.5-3H7.5z"/></svg>
     </div>
-  </header>
-  <main class="pir-pred-content">
-    <h1 class="pir-pred-game-title">Aviatrix</h1>
-    <div class="pir-range"><span>Plage : 10x - 25x</span></div>
-    <div class="pir-game-section">
-      <canvas class="pir-canvas" id="crashCanvas"></canvas>
-      <div class="pir-viewport">
-        <img src="../assets/games/aviatrix_bg.png" alt="Aviatrix" class="pir-viewport-bg" />
-        <div class="pir-viewport-overlay"></div>
-        <div class="pir-viewport-gradient"></div>
-        <div class="pir-mult-overlay">
-          <span class="pir-mult-signal-label" id="multSignalLabel" style="display:none;">SIGNAL ACTIF</span>
-          <span class="pir-mult-value" id="multValue">--</span>
-          <span class="pir-mult-state" id="multState">En attente du signal</span>
-        </div>
+  </div>
+
+  <!-- Main -->
+  <div class="pir-game-main">
+    <div class="pir-game-title">Aviatrix</div>
+    <div class="pir-game-skull-badge">
+      <span>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a9 9 0 00-9 9c0 3.07 1.64 5.64 4 7.1V22h10v-3.9c2.36-1.46 4-4.03 4-7.1a9 9 0 00-9-9zm-2.5 11a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm-7 1l-.5 3h7l-.5-3H7.5z"/></svg>
+        Pirater - Gros Coefficients
+      </span>
+    </div>
+
+    <!-- Game Area -->
+    <div class="pir-game-area">
+      <div class="pir-game-area-bg" style="background-image: url('../assets/games/aviatrix_bg.png');"></div>
+    </div>
+
+    <!-- Loading bar -->
+    <div class="pir-loader-wrap">
+      <div class="pir-loader">
+        <div class="pir-loader-bar" id="pirLoaderBar"></div>
       </div>
     </div>
-    <button class="pir-predire-btn" id="predireBtn">PREDIRE</button>
-    <a class="pir-back-btn" href="index.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M19 12H5"/><path d="M 12 19l-7-7 7-7"/></svg>
-      <span>Retour</span>
-    </a>
-  </main>
-  <footer class="pir-footer-pred"><p>BNET54 Pirater 2025</p></footer>
-  <div class="pir-badge-float">&#9760; BNET54</div>
-  <script src="aviatrix.js"></script>
+
+    <!-- Prediction Card -->
+    <div class="pir-prediction">
+      <div class="pir-prediction-label">Signal Pirat&eacute;</div>
+      <div class="pir-prediction-value" id="pirCoeff">---</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="pir-stats">
+      <div class="pir-stat-row">
+        <span class="pir-stat-label">Heure :</span>
+        <span class="pir-stat-value time" id="pirTime">--:--:-- - --:--:--</span>
+      </div>
+      <div class="pir-stat-row">
+        <span class="pir-stat-label">Chance :</span>
+        <span class="pir-stat-value chance" id="pirChance">--%</span>
+      </div>
+      <div class="pir-stat-row">
+        <span class="pir-stat-label">Avant le signal :</span>
+        <span class="pir-stat-value countdown" id="pirCountdown">--:--</span>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <button class="pir-btn-signal" id="pirSignalBtn">OBTENIR LE SIGNAL</button>
+    <a class="pir-btn-back" href="index.html">&larr; Retour</a>
+
+    <div class="pir-game-footer">BNET54 &copy; 2025</div>
+  </div>
+
+  <!-- Floating badge -->
+  <div class="pir-badge-float">BNET54</div>
+
+  <script>
+    pirGame = { name: 'aviatrix' };
+  </script>
+  <script src="pirate.js"></script>
 </body>
 </html>

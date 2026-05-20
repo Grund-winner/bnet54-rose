@@ -1,291 +1,202 @@
-/* BNET54 - Labu Run Prediction */
-(function () {
-  'use strict';
+/* ========================================
+   Labu Run - Signal Prediction Script
+   ======================================== */
 
-  /* ============================================================
-     CONFIG
-     - Higher difficulty = SAFER predictions (less risk)
-     - FACILE: wider range, moderate risk
-     - MOYEN: moderate range
-     - DIFFICILE: narrower, safer
-     - HARDCORE: very narrow, very safe
-     ============================================================ */
-  var GAME_MODES = {
-    facile:    [1.10, 1.20, 1.30, 1.50, 1.80, 2.00, 2.50, 3.00],
-    moyen:     [1.15, 1.25, 1.40, 1.60, 1.80, 2.00, 2.50, 3.00, 3.50],
-    difficile: [1.30, 1.50, 1.70, 1.80, 2.00, 2.20, 2.50],
-    hardcore:  [1.50, 1.60, 1.70, 1.80, 2.00, 2.20]
-  };
+// Game mode multiplier ranges
+// Each difficulty has realistic crash coefficient ranges
+// Higher difficulty = riskier multipliers (bigger potential but lower probability)
+const GAME_MODES = {
+    easy: {
+        multipliers: [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.8, 2.0, 2.3, 2.5, 3.0, 3.5, 4.0, 5.0],
+        weights:     [60,   55,  50,  45,  40,  35,  25,  20,  15,  12,   8,   5,   3,   1]
+    },
+    medium: {
+        multipliers: [1.2, 1.5, 1.7, 2.0, 2.5, 3.0, 4.0, 5.5, 7.0, 9.0, 12.0],
+        weights:     [50,   45,  40,  30,  22,  15,  10,   6,   3,   2,    1]
+    },
+    hard: {
+        multipliers: [1.5, 2.0, 3.0, 5.0, 8.0, 12.0, 20.0, 35.0],
+        weights:     [40,  30,  20,  12,   6,    3,    1,   0.5]
+    },
+    hardcore: {
+        multipliers: [2.0, 3.0, 5.0, 10.0, 20.0, 50.0, 100.0],
+        weights:     [35,  22,  10,    4,    1.5,  0.4,   0.1]
+    }
+};
 
-  /* Weight: lower multipliers more likely (safer prediction) */
-  function getWeight(v) {
-    if (v <= 1.5) return 45;
-    if (v <= 2.0) return 30;
-    if (v <= 2.5) return 15;
-    if (v <= 3.0) return 7;
-    return 3;
-  }
+let currentGameMode = 'easy';
+let gameInProgress = false;
+let gameFinished = false;
 
-  var SUCCESS_CHANCE = {
-    facile:    0.72,
-    moyen:     0.78,
-    difficile: 0.84,
-    hardcore:  0.90
-  };
+// DOM Elements
+const labu = document.getElementById('labu');
+const labuImg = document.getElementById('labu-img');
+const getSignalBtn = document.getElementById('getSignalBtn');
+const backBtn = document.getElementById('backBtn');
+const modeButtons = document.querySelectorAll('.mode-btn');
+const coefficientDisplay = document.getElementById('coefficientDisplay');
+const coefficientText = document.getElementById('coefficientText');
 
-  /* ---- DOM ---- */
-  var predireBtn      = document.getElementById('predireBtn');
-  var backBtn         = document.getElementById('backBtn');
-  var gameArea        = document.getElementById('gameArea');
-  var character       = document.getElementById('character');
-  var charImg         = document.getElementById('charImg');
-  var startPlatform   = document.getElementById('startPlatform');
-  var landingPlatform = document.getElementById('landingPlatform');
-  var crashLayer      = document.getElementById('crashLayer');
-  var crashImg        = document.getElementById('crashImg');
-  var coeffDisplay    = document.getElementById('coeffDisplay');
-  var coeffInner      = document.getElementById('coeffInner');
-  var loadingLayer    = document.getElementById('loadingLayer');
-  var modeButtons     = document.querySelectorAll('.mode-btn');
+// ========================================
+// Mode Selection
+// ========================================
+modeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        if (gameInProgress) return;
 
-  var currentMode = 'facile';
-  var isRunning = false;
+        // Remove active class from all buttons
+        modeButtons.forEach(btn => btn.classList.remove('active'));
 
-  /* ---- Helpers ---- */
-  function wait(ms) {
+        // Add active class to clicked button
+        button.classList.add('active');
+
+        // Set new mode
+        currentGameMode = button.dataset.mode;
+
+        // Reset if game was finished
+        if (gameFinished) {
+            cleanupGame();
+            gameFinished = false;
+        }
+    });
+});
+
+// ========================================
+// Back Button
+// ========================================
+backBtn.addEventListener('click', () => {
+    window.location.href = 'index.html';
+});
+
+// ========================================
+// Predict Button
+// ========================================
+getSignalBtn.addEventListener('click', async () => {
+    if (gameInProgress) return;
+
+    gameInProgress = true;
+    getSignalBtn.disabled = true;
+
+    // Disable mode buttons during prediction
+    modeButtons.forEach(btn => btn.disabled = true);
+
+    try {
+        cleanupGame();
+        gameFinished = false;
+
+        await playPredictionSequence();
+    } catch (error) {
+        console.error('Prediction error:', error);
+        cleanupGame();
+    } finally {
+        gameInProgress = false;
+        getSignalBtn.disabled = false;
+        modeButtons.forEach(btn => btn.disabled = false);
+        gameFinished = true;
+    }
+});
+
+// ========================================
+// Game Cleanup
+// ========================================
+function cleanupGame() {
+    // Hide coefficient display
+    coefficientDisplay.classList.remove('visible', 'easy', 'medium', 'hard', 'hardcore');
+
+    // Reset rabbit
+    labu.classList.remove('jumping', 'landed');
+    labuImg.src = 'assets/laburun/labu_standing.png';
+
+    // Re-add idle animation
+    labu.classList.add('idle');
+}
+
+// ========================================
+// Main Prediction Sequence
+// ========================================
+async function playPredictionSequence() {
+    // 1. Rabbit prepares (stops idle, shows excitement)
+    labu.classList.remove('idle');
+    labuImg.src = 'assets/laburun/labu_excited.png';
+
+    await wait(400);
+
+    // 2. Rabbit jumps
+    labu.classList.add('jumping');
+    await wait(1200);
+    labu.classList.remove('jumping');
+
+    // 3. Rabbit lands with bounce
+    labu.classList.add('landed');
+    labuImg.src = 'assets/laburun/labu_standing.png';
+
+    await wait(300);
+
+    // 4. Calculate and display coefficient
+    const multiplier = getWeightedMultiplier(currentGameMode);
+
+    // Show coefficient above rabbit's head
+    coefficientText.textContent = multiplier + 'x';
+    coefficientDisplay.classList.add('visible', currentGameMode);
+
+    // Re-add idle after landing settles
+    await wait(500);
+    labu.classList.remove('landed');
+    labu.classList.add('idle');
+}
+
+// ========================================
+// Weighted Random Multiplier
+// ========================================
+function getWeightedMultiplier(mode) {
+    const modeData = GAME_MODES[mode];
+    const multipliers = modeData.multipliers;
+    const weights = modeData.weights;
+
+    // Calculate total weight
+    const totalWeight = weights.reduce(function (a, b) { return a + b; }, 0);
+
+    // Generate random number within weight range
+    var random = Math.random() * totalWeight;
+
+    // Select multiplier based on weights
+    for (var i = 0; i < multipliers.length; i++) {
+        if (random < weights[i]) {
+            return multipliers[i];
+        }
+        random -= weights[i];
+    }
+
+    // Fallback (should never reach here)
+    return multipliers[0];
+}
+
+// ========================================
+// Utility
+// ========================================
+function wait(ms) {
     return new Promise(function (resolve) { setTimeout(resolve, ms); });
-  }
+}
 
-  function pickMultiplier(mode) {
-    var mults = GAME_MODES[mode];
-    var weights = [];
-    var total = 0;
-    for (var i = 0; i < mults.length; i++) {
-      var w = getWeight(mults[i]);
-      weights.push(w);
-      total += w;
-    }
-    var r = Math.random() * total;
-    for (var k = 0; k < mults.length; k++) {
-      if (r < weights[k]) return mults[k];
-      r -= weights[k];
-    }
-    return mults[mults.length - 1];
-  }
-
-  /* Build coefficient display using game number sprites */
-  function buildCoeffSprites(mult) {
-    coeffInner.innerHTML = '';
-    var str = mult.toFixed(2);
-    for (var i = 0; i < str.length; i++) {
-      var ch = str[i];
-      var img = document.createElement('img');
-      if (ch === '.') {
-        img.src = 'assets/laburun/num_dot.png';
-      } else {
-        img.src = 'assets/laburun/num_' + ch + '.png';
-      }
-      img.alt = ch;
-      img.draggable = false;
-      coeffInner.appendChild(img);
-    }
-  }
-
-  function getPlatScreenPos(el) {
-    var gRect = gameArea.getBoundingClientRect();
-    var pRect = el.getBoundingClientRect();
-    return {
-      left: pRect.left - gRect.left + pRect.width / 2,
-      bottom: gRect.bottom - pRect.bottom
+// ========================================
+// Anti-zoom
+// ========================================
+(function () {
+    var pz = function (e) { if (e.touches && e.touches.length > 1) e.preventDefault(); };
+    document.addEventListener('touchstart', pz, { passive: false });
+    document.addEventListener('touchmove', pz, { passive: false });
+    var lockVp = function () {
+        var vp = document.querySelector('meta[name="viewport"]');
+        if (vp) vp.setAttribute('content', 'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover');
     };
-  }
-
-  /* ---- Reset ---- */
-  function reset() {
-    startPlatform.className = 'platform start-platform';
-    landingPlatform.className = 'platform landing-platform';
-    landingPlatform.style.opacity = '0.4';
-    character.style.display = '';
-    character.classList.remove('jumping', 'falling');
-    character.classList.add('idle');
-    charImg.src = 'assets/laburun/character_01.png';
-    crashLayer.style.display = 'none';
-    coeffDisplay.style.display = 'none';
-    coeffDisplay.className = 'coeff-display';
-    loadingLayer.style.display = 'none';
-  }
-
-  /* ---- Position character on platform ---- */
-  function positionOnPlatform(platEl) {
-    var pos = getPlatScreenPos(platEl);
-    character.style.left = pos.left + 'px';
-    character.style.bottom = pos.bottom + 'px';
-  }
-
-  /* ---- Jump animation ---- */
-  function doJump(targetPlat) {
-    return new Promise(function (resolve) {
-      character.classList.remove('idle', 'jumping');
-      void character.offsetWidth;
-      character.classList.add('jumping');
-      positionOnPlatform(targetPlat);
-      setTimeout(function () {
-        character.classList.remove('jumping');
-        resolve();
-      }, 550);
-    });
-  }
-
-  /* ---- Fall animation ---- */
-  function doFall() {
-    return new Promise(function (resolve) {
-      character.classList.remove('idle');
-      character.classList.add('falling');
-      charImg.src = 'assets/laburun/character_04.png';
-      setTimeout(function () {
-        character.style.display = 'none';
-        resolve();
-      }, 500);
-    });
-  }
-
-  /* ---- Show crash frames ---- */
-  function showCrash() {
-    return new Promise(function (resolve) {
-      crashLayer.style.display = '';
-      var frames = [
-        'assets/laburun/Crash_1.png',
-        'assets/laburun/Crash_3.png',
-        'assets/laburun/Crash_5.png',
-        'assets/laburun/Crash_7.png',
-        'assets/laburun/Crash_9.png',
-        'assets/laburun/Boom_1.png',
-        'assets/laburun/Smoke_1_Screen.png'
-      ];
-      var fi = 0;
-      function next() {
-        if (fi < frames.length) {
-          crashImg.src = frames[fi];
-          fi++;
-          setTimeout(next, 120);
-        } else {
-          setTimeout(function () {
-            crashLayer.style.display = 'none';
-            resolve();
-          }, 400);
-        }
-      }
-      next();
-    });
-  }
-
-  /* ---- Mode Buttons ---- */
-  for (var b = 0; b < modeButtons.length; b++) {
-    (function (btn) {
-      btn.addEventListener('click', function () {
-        if (isRunning) return;
-        currentMode = btn.getAttribute('data-mode');
-        for (var j = 0; j < modeButtons.length; j++) {
-          modeButtons[j].classList.toggle('active', modeButtons[j].getAttribute('data-mode') === currentMode);
-        }
-      });
-    })(modeButtons[b]);
-  }
-
-  backBtn.addEventListener('click', function () { window.location.href = 'index.html'; });
-
-  /* ============================================================
-     PREDIRE - Single Jump Mechanic
-     ============================================================ */
-  predireBtn.addEventListener('click', function () {
-    if (isRunning) return;
-    isRunning = true;
-    predireBtn.disabled = true;
-    reset();
-
-    /* Show start platform as lit */
-    startPlatform.classList.add('lit');
-
-    /* Position character on start */
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        positionOnPlatform(startPlatform);
-      });
-    });
-
-    /* Show loading */
-    loadingLayer.style.display = '';
-
-    /* After loading, execute */
-    setTimeout(function () {
-      loadingLayer.style.display = 'none';
-      executePrediction();
-    }, 2200);
-  });
-
-  function executePrediction() {
-    var mult = pickMultiplier(currentMode);
-    var success = Math.random() < (SUCCESS_CHANCE[currentMode] || 0.78);
-
-    /* Show landing platform */
-    landingPlatform.style.opacity = '1';
-
-    /* Change character to ready expression */
-    charImg.src = 'assets/laburun/character_02.png';
-
-    /* Single jump to landing platform */
-    doJump(landingPlatform).then(function () {
-      if (success) {
-        /* SUCCESS - character lands safely */
-        charImg.src = 'assets/laburun/character_03.png';
-        character.classList.add('idle');
-        landingPlatform.classList.add('gold');
-
-        /* Show coefficient */
-        setTimeout(function () {
-          buildCoeffSprites(mult);
-          coeffDisplay.style.display = '';
-          isRunning = false;
-          predireBtn.disabled = false;
-        }, 300);
-      } else {
-        /* FAIL - character crashes */
-        landingPlatform.classList.add('crash-state');
-
-        setTimeout(function () {
-          doFall().then(function () {
-            showCrash().then(function () {
-              buildCoeffSprites(mult);
-              coeffDisplay.className = 'coeff-display fail';
-              coeffDisplay.style.display = '';
-              isRunning = false;
-              predireBtn.disabled = false;
-            });
-          });
-        }, 200);
-      }
-    });
-  }
-
-  /* ---- Init ---- */
-  function init() {
-    reset();
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        positionOnPlatform(startPlatform);
-        startPlatform.classList.add('lit');
-      });
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-
-  /* Anti-zoom */
-  var pz = function (e) { if (e.touches && e.touches.length > 1) e.preventDefault(); };
-  document.addEventListener('touchstart', pz, { passive: false });
-  document.addEventListener('touchmove', pz, { passive: false });
+    window.addEventListener('resize', lockVp);
+    setTimeout(lockVp, 500);
 })();
+
+// ========================================
+// Initialize
+// ========================================
+document.addEventListener('DOMContentLoaded', function () {
+    // Start idle animation
+    labu.classList.add('idle');
+});

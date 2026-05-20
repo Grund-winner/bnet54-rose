@@ -1,80 +1,81 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <meta name="theme-color" content="#0b1a3a">
-  <title>BNET54 - Labu Run</title>
-  <link rel="icon" href="assets/logo.png">
-  <link rel="stylesheet" href="laburun.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="theme-color" content="#050d14">
+    <title>BNET54 - Labu Run</title>
+    <link rel="icon" href="assets/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Bangers&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="laburun.css">
 </head>
 <body>
-  <div class="game-bg"></div>
+    <div class="game-wrapper">
+        <!-- Game background directly visible -->
+        <div class="game-bg"></div>
 
-  <!-- Atmospheric particles -->
-  <div class="atmo-glow ag-1"></div>
-  <div class="atmo-glow ag-2"></div>
+        <!-- Floating particles -->
+        <div class="particle p1"></div>
+        <div class="particle p2"></div>
+        <div class="particle p3"></div>
+        <div class="particle p4"></div>
+        <div class="particle p5"></div>
+        <div class="particle p6"></div>
 
-  <div class="game-container">
-    <!-- Logo -->
-    <div class="logo-wrap">
-      <img src="assets/laburun/logo.png" alt="Labu Run" class="game-logo">
+        <div class="game-container">
+            <!-- Logo -->
+            <div class="logo-container">
+                <img src="assets/laburun/game-logo.webp" alt="Labu Run" class="logo" onerror="this.style.display='none'">
+            </div>
+
+            <!-- Game Mode Selector -->
+            <div class="game-mode-selector">
+                <div class="mode-title">Choose Difficulty</div>
+                <div class="mode-buttons">
+                    <button class="mode-btn active" data-mode="easy">Easy</button>
+                    <button class="mode-btn" data-mode="medium">Medium</button>
+                    <button class="mode-btn" data-mode="hard">Hard</button>
+                    <button class="mode-btn" data-mode="hardcore">Hardcore</button>
+                </div>
+            </div>
+
+            <!-- Game Area - directly on the background -->
+            <div class="game-area">
+                <!-- Sparkle effects -->
+                <div class="sparkle s1"></div>
+                <div class="sparkle s2"></div>
+                <div class="sparkle s3"></div>
+                <div class="sparkle s4"></div>
+                <div class="sparkle s5"></div>
+                <div class="sparkle s6"></div>
+
+                <!-- Rabbit Character -->
+                <div class="labu" id="labu">
+                    <img src="assets/laburun/labu_standing.png" alt="Labu" id="labu-img">
+                </div>
+
+                <!-- Coefficient Display (hidden initially) -->
+                <div class="coefficient-display" id="coefficientDisplay">
+                    <div class="coefficient-glow"></div>
+                    <div class="coefficient-text" id="coefficientText">0.00x</div>
+                </div>
+            </div>
+
+            <!-- Predict Button -->
+            <div class="signal-button-container">
+                <button class="get-signal-btn" id="getSignalBtn">PREDICT</button>
+            </div>
+
+            <!-- Back Button -->
+            <div class="bottom-buttons-container">
+                <button class="back-btn" id="backBtn">
+                    <div class="back-icon">&larr;</div>
+                    <span class="back-text">Back</span>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!-- Mode Selector -->
-    <div class="mode-selector">
-      <button class="mode-btn active" data-mode="facile">FACILE</button>
-      <button class="mode-btn" data-mode="moyen">MOYEN</button>
-      <button class="mode-btn" data-mode="difficile">DIFFICILE</button>
-      <button class="mode-btn" data-mode="hardcore">HARDCORE</button>
-    </div>
-
-    <!-- Game Area - FULL PAGE STYLE -->
-    <div class="game-area" id="gameArea">
-      <!-- Starting platform -->
-      <div class="platform start-platform" id="startPlatform">
-        <div class="platform-ring"></div>
-        <div class="platform-core"></div>
-      </div>
-
-      <!-- Landing platform -->
-      <div class="platform landing-platform" id="landingPlatform">
-        <div class="platform-ring"></div>
-        <div class="platform-core"></div>
-      </div>
-
-      <!-- Character (single composite image) -->
-      <div class="character" id="character">
-        <img src="assets/laburun/character_01.png" alt="" id="charImg" draggable="false">
-      </div>
-
-      <!-- Crash effect -->
-      <div class="crash-layer" id="crashLayer" style="display:none">
-        <img id="crashImg" src="" alt="" draggable="false">
-      </div>
-
-      <!-- Coefficient display using game number sprites -->
-      <div class="coeff-display" id="coeffDisplay" style="display:none">
-        <div class="coeff-inner" id="coeffInner"></div>
-      </div>
-
-      <!-- Loading -->
-      <div class="loading-layer" id="loadingLayer" style="display:none">
-        <div class="loading-spinner"></div>
-        <span>Analyse en cours...</span>
-      </div>
-    </div>
-
-    <!-- PREDIRE Button -->
-    <button class="predire-btn" id="predireBtn">PREDIRE</button>
-
-    <!-- Back Button -->
-    <button class="back-btn" id="backBtn">
-      <span>&#8592;</span>
-      <span>Retour</span>
-    </button>
-  </div>
-
-  <script src="laburun.js"></script>
+    <script src="laburun.js"></script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The game logo for \"Labu Run\" features a playful, cartoonish style. The text \"LABU RUN\" is displayed in a bold, rounded, 3D font with a white fill and red accents (dots inside letters, dripping effects). The letters are outlined in a vibrant green, giving a soft, pillowy appearance. Behind the text, there are two fluffy, light - colored (beige/cream) rabbit - like ears with red drips (resembling blood or a playful “messy” effect) on them. The color palette is bright and eye - catching, with green, white, and red as the main colors, creating a whimsical and energetic vibe.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1779269621,
+  "id": "20260520173338bc77b2b4c1c54ad5",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "20260520173338bc77b2b4c1c54ad5",
+  "usage": {
+    "completion_tokens": 141,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 450,
+    "prompt_tokens_details": {
+      "cached_tokens": 5
+    },
+    "total_tokens": 591
+  }
+}

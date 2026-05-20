@@ -5,13 +5,11 @@
   var MIN_MULT = 1.0;
   var MAX_MULT = 8.0;
   var predStatus = 'idle';
-  var history = [];
   var canvasAnimId = null;
 
   var multValue = document.getElementById('multValue');
   var multSignalLabel = document.getElementById('multSignalLabel');
   var multState = document.getElementById('multState');
-  var historyChips = document.getElementById('historyChips');
   var predireBtn = document.getElementById('predireBtn');
   var statusDot = document.getElementById('statusDot');
   var statusText = document.getElementById('statusText');
@@ -49,8 +47,6 @@
   }
   function stopCanvas() { if (canvasAnimId) { cancelAnimationFrame(canvasAnimId); canvasAnimId = null; } }
 
-  function renderHistory() { historyChips.innerHTML = ''; for (var i = 0; i < history.length; i++) { var c = document.createElement('span'); c.className = 'history-chip' + (parseFloat(history[i]) >= 3 ? ' history-chip-high' : ''); c.textContent = history[i] + 'x'; historyChips.appendChild(c); } }
-
   predireBtn.addEventListener('click', function () {
     if (predStatus === 'predicting') return;
     predStatus = 'predicting'; predireBtn.disabled = true;
@@ -61,7 +57,6 @@
       var m = genMult(); multValue.textContent = 'x' + m; multValue.className = 'mult-value mult-bounce';
       multSignalLabel.style.display = 'block'; multState.textContent = 'Signal actif';
       statusDot.style.backgroundColor = '#00e676'; statusText.textContent = 'Signal actif';
-      history.unshift(m); if (history.length > 5) history = history.slice(0, 5); renderHistory();
       predStatus = 'active'; predireBtn.disabled = false; predireBtn.innerHTML = 'PREDIRE';
     }, 2000);
   });

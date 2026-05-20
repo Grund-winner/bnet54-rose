@@ -41,17 +41,11 @@ body {
 .game-viewport-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.2); z-index: 1; pointer-events: none; }
 .game-viewport-gradient { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 40%, transparent 70%); z-index: 2; pointer-events: none; }
 
-.mult-overlay { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 32px; background: rgba(0,0,0,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; min-width: 160px; }
+.mult-overlay { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 32px; background: transparent; border-radius: 16px; min-width: 160px; }
 .mult-signal-label { font-size: 9px; font-weight: 700; color: #00e676; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; animation: fadeInUp 0.3s ease both; }
 .mult-value { font-size: 3.5rem; font-weight: 900; line-height: 1; letter-spacing: 1px; background: linear-gradient(135deg, #e8b830, #f7dc8a, #e8b830); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 20px rgba(232,184,48,0.4)); }
 .mult-bounce { animation: multBounce 0.6s cubic-bezier(0.34,1.56,0.64,1); }
 .mult-state { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; }
-
-.history-row { width: 100%; margin-bottom: 20px; animation: fadeInUp 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.3s both; }
-.history-label { display: block; font-size: 10px; font-weight: 700; color: #7b8da4; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
-.history-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.history-chip { display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.65); font-variant-numeric: tabular-nums; }
-.history-chip-high { background: rgba(0,230,118,0.08); border-color: rgba(0,230,118,0.2); color: #00e676; }
 
 .predire-btn { width: 100%; padding: 16px 20px; border-radius: 14px; border: none; background: linear-gradient(135deg, #f7dc8a, #e8b830, #c99520); color: #0a1628; font-size: 17px; font-weight: 700; cursor: pointer; letter-spacing: 1px; margin-top: 24px; transition: all 0.2s; animation: fadeInUp 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.4s both; box-shadow: 0 4px 20px rgba(232,184,48,0.3); }
 .predire-btn:active { transform: scale(0.97); box-shadow: 0 2px 10px rgba(232,184,48,0.2); }

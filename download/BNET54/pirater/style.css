@@ -1,0 +1,329 @@
+/* ================================================================
+   BNET54 - Pirater Section Styles
+   ================================================================ */
+
+:root {
+  --navy: #060a20;
+  --red: #e63946;
+  --red-dark: #b5202d;
+  --red-glow: rgba(230,57,70,0.25);
+  --glass: rgba(255,255,255,0.03);
+  --glass-border: rgba(255,255,255,0.06);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  touch-action: pan-x pan-y !important;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Arial, sans-serif;
+  background: linear-gradient(160deg, #060a1a, #0c0e28, #0a0a20);
+  background-attachment: fixed;
+  color: #fff;
+  min-height: 100vh; min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Header ---- */
+.pir-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(6,10,26,0.88);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: calc(env(safe-area-inset-top,0px) + 12px) 16px 12px;
+  display: flex; align-items: center; gap: 12px;
+}
+.pir-back {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.6); text-decoration: none;
+  cursor: pointer; transition: background 0.2s;
+}
+.pir-back:active { background: rgba(255,255,255,0.08); }
+.pir-title-wrap { display: flex; align-items: center; gap: 8px; flex: 1; }
+.pir-skull { font-size: 20px; opacity: 0.7; }
+.pir-brand {
+  font-size: 18px; font-weight: 700;
+  background: linear-gradient(135deg, var(--red), #ff6b6b);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.pir-sub {
+  font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase; letter-spacing: 1.5px;
+}
+
+/* ---- Subtitle ---- */
+.pir-subtitle {
+  text-align: center; padding: 20px 16px 14px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.pir-subtitle h2 {
+  font-size: 14px; font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.3px;
+}
+.pir-desc {
+  font-size: 11px; font-weight: 700;
+  color: var(--red); margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+/* ---- Grid ---- */
+.pir-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px; padding: 8px 16px 24px;
+  max-width: 460px; margin: 0 auto;
+}
+
+/* ---- Card ---- */
+.pir-game {
+  display: block; text-decoration: none;
+  animation: cardIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  opacity: 0;
+}
+.pir-game:nth-child(1) { animation-delay: 0.03s; }
+.pir-game:nth-child(2) { animation-delay: 0.06s; }
+.pir-game:nth-child(3) { animation-delay: 0.09s; }
+.pir-game:nth-child(4) { animation-delay: 0.12s; }
+
+.pir-card {
+  position: relative; border-radius: 16px; padding: 6px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+  transition: all 0.3s;
+  animation: pirFloat 4s ease-in-out infinite;
+}
+.pir-game:nth-child(odd) .pir-card { animation-delay: 0s; }
+.pir-game:nth-child(even) .pir-card { animation-delay: -2s; }
+.pir-game:active .pir-card {
+  transform: scale(0.92);
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 20px var(--red-glow);
+  border-color: rgba(230,57,70,0.2);
+}
+.pir-glow {
+  position: absolute; inset: -2px; border-radius: 18px; opacity: 0;
+  background: radial-gradient(circle, var(--red-glow), transparent 70%);
+  transition: opacity 0.3s; pointer-events: none;
+}
+.pir-game:active .pir-glow { opacity: 1; }
+.pir-img {
+  width: 100%; height: auto; display: block;
+  border-radius: 12px; position: relative; z-index: 1;
+}
+
+/* ---- Badge ---- */
+.pir-badge {
+  position: absolute; top: 12px; right: 12px; z-index: 5;
+  padding: 3px 8px; border-radius: 6px;
+  background: rgba(230,57,70,0.9);
+  color: #fff; font-size: 8px; font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.pir-badge-premium {
+  background: rgba(0,200,83,0.9);
+}
+
+/* ---- Footer ---- */
+.pir-footer {
+  text-align: center; padding: 14px 16px calc(env(safe-area-inset-bottom,0px) + 14px);
+  border-top: 1px solid rgba(255,255,255,0.04);
+  max-width: 460px; margin: 0 auto;
+}
+.pir-footer p { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.3px; }
+
+/* ================================================================
+   PREDICTION PAGE STYLES (shared by individual game pages)
+   ================================================================ */
+
+.pir-pred-ambient {
+  position: fixed; top: -30%; left: -15%; width: 130%; height: 70%;
+  background: radial-gradient(ellipse, rgba(230,57,70,0.03) 0%, transparent 65%);
+  pointer-events: none; z-index: 0;
+  animation: pirAmbient 10s ease-in-out infinite alternate;
+}
+
+.pir-pred-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(env(safe-area-inset-top,0px) + 12px) 20px 12px;
+  background: rgba(6,10,26,0.75);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  animation: pirSlideDown 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.pir-pred-header-left {
+  display: flex; align-items: baseline; gap: 10px;
+}
+.pir-pred-logo {
+  font-size: 20px; font-weight: 800;
+  background: linear-gradient(135deg, var(--red), #ff6b6b);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.pir-pred-header-sub {
+  font-size: 12px; color: #7b8da4; font-weight: 500;
+}
+.pir-pred-header-right {
+  display: flex; align-items: center; gap: 8px;
+}
+.pir-pred-status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--red);
+  animation: pirStatusPulse 1.5s ease-in-out infinite;
+}
+.pir-pred-status-text {
+  font-size: 12px; color: #7b8da4; font-weight: 500;
+}
+
+.pir-pred-content {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+  padding: calc(env(safe-area-inset-top,0px) + 72px) 20px 20px;
+  max-width: 460px; margin: 0 auto; width: 100%;
+}
+.pir-pred-game-title {
+  font-size: 26px; font-weight: 800; color: #fff;
+  text-align: center; margin-bottom: 18px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+}
+
+/* Game section */
+.pir-game-section {
+  width: 100%; margin-bottom: 20px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+}
+.pir-canvas {
+  width: 100%; height: 80px; display: block;
+  border-radius: 12px 12px 0 0;
+  background: rgba(0,0,0,0.3);
+}
+.pir-viewport {
+  position: relative; width: 100%; height: 340px;
+  border-radius: 0 0 20px 20px; overflow: hidden;
+  border: 1px solid rgba(230,57,70,0.15);
+  border-top: none;
+}
+.pir-viewport-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+.pir-viewport-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.2);
+  z-index: 1; pointer-events: none;
+}
+.pir-viewport-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 40%, transparent 70%);
+  z-index: 2; pointer-events: none;
+}
+.pir-mult-overlay {
+  position: absolute; bottom: 20px; left: 50%;
+  transform: translateX(-50%); z-index: 3;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+  padding: 16px 32px; min-width: 160px;
+}
+.pir-mult-signal-label {
+  font-size: 9px; font-weight: 700; color: var(--red);
+  text-transform: uppercase; letter-spacing: 2px;
+  margin-bottom: 4px;
+  animation: fadeInUp 0.3s ease both;
+}
+.pir-mult-value {
+  font-size: 3.5rem; font-weight: 900; line-height: 1;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, var(--red), #ff6b6b, var(--red));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 20px var(--red-glow));
+}
+.pir-mult-bounce { animation: pirMultBounce 0.6s cubic-bezier(0.34,1.56,0.64,1); }
+.pir-mult-state {
+  font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500;
+}
+
+/* Range indicator */
+.pir-range {
+  width: 100%; margin-bottom: 16px; text-align: center;
+  animation: fadeInUp 0.4s ease 0.15s both;
+}
+.pir-range span {
+  font-size: 11px; font-weight: 600;
+  color: var(--red); letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+/* Buttons */
+.pir-predire-btn {
+  width: 100%; padding: 16px 20px; border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #ff6b6b, var(--red), var(--red-dark));
+  color: #fff; font-size: 17px; font-weight: 700;
+  cursor: pointer; letter-spacing: 1px;
+  margin-top: 24px; transition: all 0.2s;
+  animation: fadeInUp 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;
+  box-shadow: 0 4px 20px var(--red-glow);
+}
+.pir-predire-btn:active { transform: scale(0.97); }
+.pir-predire-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.pir-predire-loading {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.pir-spinner-svg { animation: pirSpin 0.8s linear infinite; }
+
+.pir-back-btn {
+  width: 100%; display: flex; align-items: center;
+  justify-content: center; gap: 10px;
+  padding: 14px 20px; border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: #7b8da4; font-size: 15px; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+  transition: all 0.2s; margin-top: 12px;
+  animation: fadeInUp 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.4s both;
+}
+.pir-back-btn:active { background: rgba(255,255,255,0.08); transform: scale(0.97); }
+.pir-back-btn svg { flex-shrink: 0; }
+
+.pir-footer-pred {
+  position: relative; z-index: 1;
+  text-align: center;
+  padding: 16px 20px calc(env(safe-area-inset-bottom,0px) + 16px);
+  margin-top: auto;
+}
+.pir-footer-pred p { font-size: 11px; color: #7b8da4; letter-spacing: 0.5px; }
+
+.pir-badge-float {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom,0px) + 20px);
+  right: 20px; z-index: 90;
+  padding: 8px 16px; border-radius: 20px;
+  background: linear-gradient(135deg, rgba(230,57,70,0.2), rgba(230,57,70,0.08));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(230,57,70,0.25);
+  font-size: 12px; font-weight: 800;
+  color: var(--red); letter-spacing: 0.5px;
+  animation: pirBadgeFloat 3s ease-in-out infinite;
+}
+
+/* ================================================================
+   ANIMATIONS
+   ================================================================ */
+@keyframes fadeInUp { 0%{opacity:0;transform:translateY(16px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes cardIn { 0%{opacity:0;transform:scale(0.8) translateY(12px)} 100%{opacity:1;transform:scale(1) translateY(0)} }
+@keyframes pirFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+@keyframes pirSlideDown { 0%{opacity:0;transform:translateY(-20px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes pirStatusPulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+@keyframes pirMultBounce { 0%{transform:scale(0.7);opacity:0.5} 50%{transform:scale(1.08)} 70%{transform:scale(0.97)} 100%{transform:scale(1);opacity:1} }
+@keyframes pirBadgeFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+@keyframes pirAmbient { 0%{transform:translate(0,0)} 100%{transform:translate(20px,15px)} }
+@keyframes pirSpin { from{transform:rotate(0)} to{transform:rotate(360deg)} }

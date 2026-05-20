@@ -11,15 +11,14 @@
 <body>
   <div class="game-bg"></div>
 
-  <!-- Atmospheric decorations -->
+  <!-- Atmospheric particles -->
   <div class="atmo-glow ag-1"></div>
   <div class="atmo-glow ag-2"></div>
-  <div class="atmo-glow ag-3"></div>
 
   <div class="game-container">
     <!-- Logo -->
-    <div class="game-logo-wrap">
-      <img src="assets/laburun/logo.png" alt="Labu Run" class="game-logo" id="gameLogo">
+    <div class="logo-wrap">
+      <img src="assets/laburun/logo.png" alt="Labu Run" class="game-logo">
     </div>
 
     <!-- Mode Selector -->
@@ -30,82 +29,37 @@
       <button class="mode-btn" data-mode="hardcore">HARDCORE</button>
     </div>
 
-    <!-- Game Area -->
+    <!-- Game Area - FULL PAGE STYLE -->
     <div class="game-area" id="gameArea">
-      <!-- Platforms -->
-      <div class="platforms-container" id="platformsContainer">
-        <div class="platform-row" id="row0" data-row="0">
-          <div class="platform" data-idx="0"></div>
-        </div>
-        <div class="platform-row" id="row1" data-row="1">
-          <div class="platform" data-idx="1"></div>
-        </div>
-        <div class="platform-row" id="row2" data-row="2">
-          <div class="platform" data-idx="2"></div>
-        </div>
-        <div class="platform-row" id="row3" data-row="3">
-          <div class="platform" data-idx="3"></div>
-        </div>
-        <div class="platform-row" id="row4" data-row="4">
-          <div class="platform" data-idx="4"></div>
-        </div>
-        <div class="platform-row" id="row5" data-row="5">
-          <div class="platform" data-idx="5"></div>
-        </div>
-        <div class="platform-row" id="row6" data-row="6">
-          <div class="platform" data-idx="6"></div>
-        </div>
-        <div class="platform-row" id="row7" data-row="7">
-          <div class="platform" data-idx="7"></div>
-        </div>
+      <!-- Starting platform -->
+      <div class="platform start-platform" id="startPlatform">
+        <div class="platform-ring"></div>
+        <div class="platform-core"></div>
       </div>
 
-      <!-- Character -->
+      <!-- Landing platform -->
+      <div class="platform landing-platform" id="landingPlatform">
+        <div class="platform-ring"></div>
+        <div class="platform-core"></div>
+      </div>
+
+      <!-- Character (single composite image) -->
       <div class="character" id="character">
-        <div class="char-part char-body">
-          <img src="assets/laburun/Body.png" alt="" draggable="false">
-        </div>
-        <div class="char-part char-head" id="charHead">
-          <img src="assets/laburun/Head_01.png" alt="" draggable="false">
-        </div>
-        <div class="char-part char-ear-l">
-          <img src="assets/laburun/Ear_L.png" alt="" draggable="false">
-        </div>
-        <div class="char-part char-ear-r">
-          <img src="assets/laburun/Ear_R.png" alt="" draggable="false">
-        </div>
-        <div class="char-part char-arm-l">
-          <img src="assets/laburun/Arm_L.png" alt="" draggable="false">
-        </div>
-        <div class="char-part char-arm-r">
-          <img src="assets/laburun/Arm_R.png" alt="" draggable="false">
-        </div>
-        <div class="char-part char-leg-l">
-          <img src="assets/laburun/legl1.png" alt="" draggable="false">
-        </div>
-        <div class="char-part char-leg-r">
-          <img src="assets/laburun/Leg_R.png" alt="" draggable="false">
-        </div>
-        <div class="char-part char-hand-l">
-          <img src="assets/laburun/Hand_L.png" alt="" draggable="false">
-        </div>
-        <div class="char-part char-hand-r">
-          <img src="assets/laburun/Hand_R.png" alt="" draggable="false">
-        </div>
+        <img src="assets/laburun/character_01.png" alt="" id="charImg" draggable="false">
       </div>
 
-      <!-- Crash overlay -->
-      <div class="crash-overlay" id="crashOverlay" style="display:none">
-        <img class="crash-frame" id="crashFrame" src="" alt="">
+      <!-- Crash effect -->
+      <div class="crash-layer" id="crashLayer" style="display:none">
+        <img id="crashImg" src="" alt="" draggable="false">
       </div>
 
-      <!-- Multiplier result -->
-      <div class="multiplier-display" id="multDisplay" style="display:none">
-        <span id="multValue"></span>
+      <!-- Coefficient display using game number sprites -->
+      <div class="coeff-display" id="coeffDisplay" style="display:none">
+        <div class="coeff-inner" id="coeffInner"></div>
       </div>
 
-      <!-- Loading state -->
-      <div class="loading-overlay" id="loadingOverlay" style="display:none">
+      <!-- Loading -->
+      <div class="loading-layer" id="loadingLayer" style="display:none">
         <div class="loading-spinner"></div>
         <span>Analyse en cours...</span>
       </div>
@@ -116,8 +70,8 @@
 
     <!-- Back Button -->
     <button class="back-btn" id="backBtn">
-      <span class="back-arrow">&#8592;</span>
-      <span class="back-text">Retour</span>
+      <span>&#8592;</span>
+      <span>Retour</span>
     </button>
   </div>
 

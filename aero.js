@@ -1,9 +1,9 @@
-/* BNET54 - aero Prediction */
+/* BNET54 - Aero Prediction */
 (function () {
   'use strict';
-  var CURVE_COLOR = '#00bfff';
-  var MIN_MULT = 1.2;
-  var MAX_MULT = 5.0;
+  var CURVE_COLOR = '#00d4ff';
+  var MIN_MULT = 1.1;
+  var MAX_MULT = 6.0;
   var predStatus = 'idle';
   var canvasAnimId = null;
 

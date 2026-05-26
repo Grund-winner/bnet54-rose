@@ -1,9 +1,9 @@
-/* BNET54 - aviatrix Prediction */
+/* BNET54 - Aviatrix Prediction */
 (function () {
   'use strict';
-  var CURVE_COLOR = '#00cc44';
+  var CURVE_COLOR = '#ff6b35';
   var MIN_MULT = 1.1;
-  var MAX_MULT = 5.5;
+  var MAX_MULT = 6.0;
   var predStatus = 'idle';
   var canvasAnimId = null;
 

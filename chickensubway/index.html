@@ -259,11 +259,11 @@
 <body>
     <div class="game-container">
         <!-- Background -->
-        <img src="fond_vierge.png" alt="Subway" class="bg-image">
+        <img src="background.png" alt="Subway" class="bg-image">
 
         <!-- Chicken -->
         <div class="chicken-wrapper" id="chickenWrapper">
-            <img src="poule.svg" alt="Chicken" class="chicken idle" id="chicken">
+            <img src="poule.png" alt="Chicken" class="chicken idle" id="chicken">
         </div>
 
         <!-- Countdown -->
@@ -291,9 +291,11 @@
         let currentLane = LANE.CENTER;
         let isAnimating = false;
 
+        // ===== LANE POSITIONS =====
+        // Rails are roughly at 18%, 50%, 82% of the background image width
         function getLanePositions() {
             const w = window.innerWidth;
-            const cw = 160;
+            const cw = 160; // chicken width
             return {
                 left: w * 0.18 - cw / 2,
                 center: w * 0.50 - cw / 2,
@@ -319,6 +321,7 @@
             positionChicken(currentLane, false);
         }
 
+        // ===== PREDICT =====
         function predict() {
             if (isAnimating) return;
             isAnimating = true;
@@ -329,6 +332,7 @@
 
             chicken.classList.remove('idle');
 
+            // Countdown 3, 2, 1
             let count = 3;
             showCountdown(count);
 
@@ -340,6 +344,7 @@
                     clearInterval(countInterval);
                     hideCountdown();
 
+                    // Jump to lane
                     currentLane = targetLane;
                     chicken.classList.add('jumping');
                     positionChicken(targetLane, true);
@@ -356,6 +361,7 @@
             }, 550);
         }
 
+        // ===== COUNTDOWN =====
         function showCountdown(num) {
             countdownEl.textContent = num;
             countdownEl.classList.remove('show');
@@ -368,14 +374,16 @@
             countdownEl.style.opacity = '0';
         }
 
+        // ===== BACK BUTTON =====
         function goBack() {
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.close();
             } else {
-                window.location.href = '../index.html';
+                window.history.back();
             }
         }
 
+        // ===== INIT =====
         function init() {
             positionUI();
             window.addEventListener('resize', positionUI);
